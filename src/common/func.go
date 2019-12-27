@@ -4,6 +4,10 @@ import(
 	"fmt"
 )
 
-func Print(val interface{}) {
-	fmt.Printf("val's type is %T, val = %v \n", val, val)
+func PrintStr(str interface{}) {
+	fmt.Printf("str's type is %T, str = %q \n", str, str)
+}
+
+func PrintOther(other interface{}) {
+	fmt.Printf("str's type is %T, str = %v \n", other, other)
 }
