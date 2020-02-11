@@ -38,6 +38,14 @@ func main() {
 	var i7 int64 = 89
 	// common.Print(i6 > i7) // 两个整型或俩个浮点型,位数不同不能比较
 	common.PrintOther(89 > i7)
+
+	a,b := 10,2
+	a += b
+	b = a - b
+	a = a - b
+
+
+	fmt.Printf("a = %d, b = %d", a, b)
 }
 
 func calc(temp float64) float64 {
