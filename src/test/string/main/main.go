@@ -15,7 +15,7 @@ func main() {
 
 	fmt.Printf("str length is %d \n", len(str)) // 字符串长度
 	
-	strSlice := []byte(str)  // 转字符切片 []byte同理  string(strSlice) 转回
+	strSlice := []rune(str)  // 转字符切片 []byte同理  string(strSlice) 转回
 	fmt.Printf(" strSlice = %v, strSlice length is %d, type is %T \n", strSlice, len(strSlice), strSlice)
 	fmt.Printf(" string(strSlice) = %v \n", string(strSlice))
 
