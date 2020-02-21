@@ -29,7 +29,6 @@ func main() {
 	var students1 = [5]int{1, 2, 3, 4, 5}
 	students2 := students1[1:3]
 	// append扩容
-	
 	students2[1] = 44
 	fmt.Printf("students2 = %v, type = %T, 容量 = %d \n", students2, students2, cap(students2))
 	students2 = append(students2, 200, 300) // 追加数量超过cap容量后地址变量

@@ -39,7 +39,7 @@ func main() {
 	var test2 Student
 	test2.Name = "lizhi"
 	(&test2).test()
-	test1(test2)
+	test1(&test2)
 	fmt.Printf("%+v \n", test2)
 	var i Integer
 	i = 65
