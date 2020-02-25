@@ -14,4 +14,19 @@ func main() {
 		default :
 			fmt.Println("星期格式错误")
 	}
+	
+	// type Integer interface {}
+	// var integer Integer = i
+	// 简写
+	var integer interface {} = i
+
+	// type用法
+	switch integer.(type) {
+		case int :
+			fmt.Println("int")
+		case float64 :
+			fmt.Println("float")
+		default :
+			fmt.Println("not found")
+	}
 }

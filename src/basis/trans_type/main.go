@@ -20,7 +20,7 @@ func main()  {
 
 
 	// ----------------------  数字间的转换
-	fmt.Println("----------------------  数字间的转换")
+	fmt.Println("----------------------  数字间的转换  type(i)")
 
 	var i8 int8 = 90
 	var i32 int32
@@ -35,7 +35,7 @@ func main()  {
 	fmt.Println("i8 = ", i8)
 
 	// -----------------------  数字转字符串
-	fmt.Println("----------------------  数字转字符串")
+	fmt.Println("----------------------  数字转字符串 fmt.Sprintf strconv.FormatInt")
 
 	var sint int = 500
 	var sfloat float64 = 500.5
@@ -54,8 +54,8 @@ func main()  {
 	printStr(strconv.FormatFloat(sfloat, 'f', 8, 64)) // f:格式 8:保留小数位 64:float64
 	printStr(strconv.FormatBool(sbool))
 
-	// -----------------------  字符转数字串
-	fmt.Println("----------------------  字符转数字串")
+	// -----------------------  字符串转数字
+	fmt.Println("----------------------  字符串转数字串")
 	bs, _ := strconv.ParseBool("true")
 	printOther(bs)
 
