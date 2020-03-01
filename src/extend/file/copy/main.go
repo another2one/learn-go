@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-	_ "fmt"
+	"fmt"
 	"bufio"
 	"io"
 	_ "io/ioutil"
@@ -23,9 +23,11 @@ func getNewFilename(name string) string {
 	if lastIndex == -1 {
 		log.Fatal("文件中不含.")
 	}
-	return strings.Join([]string{name[:lastIndex], time.Now().Format("20060102150405"), name[lastIndex:]}, "_")
+	// return strings.Join([]string{name[:lastIndex], time.Now().Format("20060102150405"), name[lastIndex:]}, "_")
+	return name[:lastIndex] + "_" + time.Now().Format("20060102150405") + name[lastIndex:]
 }
 
+// 复制文件
 func copyFile(readfile string) (int64, error) {
 
 	// 获取reader
@@ -47,7 +49,30 @@ func copyFile(readfile string) (int64, error) {
 	return io.Copy(writer, reader)
 }
 
+// 获取目录下文件
+func getDirfile(dir string)  (names []string, err error) {
+	file, err := os.Open(dir)
+	if err != nil {
+		log.Fatal("open readfile err :", err)
+	}
+	defer file.Close()
+	return file.Readdirnames(20)
+}
+
 func main() {
 
-	copyFile(readfile)
+	num, err := copyFile(readfile)
+	if err != nil {
+		log.Fatal("open readfile err :", err)
+	}
+	fmt.Println(num)
+
+	fileInfo, err := getDirfile("../../..")
+	if err != nil {
+		log.Fatal("open readfile err :", err)
+	}
+	for _, value := range fileInfo {
+		fmt.Printf("%+v\n", value)
+	}
+	fmt.Printf("%+v\n", fileInfo)
 }

@@ -49,4 +49,13 @@ func main() {
 		testMap["lizhi"]["passWord"] = "8888888"
 	}
 	fmt.Printf("%v, %T \n", testMap, testMap)
+
+	// map 为引用类型
+	m11 := map[int]int{1: 1, 2: 1}
+	change(m11)
+	fmt.Printf("%+v, %T \n", m11, m11)
 }
+
+func change(ss map[int]int) {
+	ss[2] = 4
+} 
