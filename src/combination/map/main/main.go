@@ -5,10 +5,12 @@ import (
 )
 
 func main() {
-	// 第一种
+
+	// **********************  几种定义使用方法 ************************
+
+	// 第一种 make分配空间后才能使用
 	var m1 map[string]string
-	// m1["我是谁"] = "李志"
-	// make分配空间后才能使用
+	// m1["我是谁"] = "李志" //报错 panic: assignment to entry in nil map
 	m1 = make(map[string]string, 2)
 	m1["我是谁"] = "李志"
 	fmt.Printf("%v, %d \n", m1, len(m1))
@@ -25,7 +27,8 @@ func main() {
 	}
 	fmt.Printf("%v, %d \n", m3, len(m3))
 
-	// 增删改查
+	// **********************  增删改查 ************************
+
 	m3["sex"] = "男"
 	fmt.Printf("%v, %d \n", m3, len(m3))
 	delete(m3, "sex")
@@ -35,7 +38,8 @@ func main() {
 		fmt.Println("not found")
 	}
 
-	// mapSlice
+	// **********************  mapSlice ************************
+
 	mapSlice := make([]map[string]string, 2)
 	fmt.Printf("%v, %T \n", mapSlice, mapSlice)
 
@@ -50,7 +54,8 @@ func main() {
 	}
 	fmt.Printf("%v, %T \n", testMap, testMap)
 
-	// map 为引用类型
+	// **********************  map 为引用类型 ************************
+
 	m11 := map[int]int{1: 1, 2: 1}
 	change(m11)
 	fmt.Printf("%+v, %T \n", m11, m11)
