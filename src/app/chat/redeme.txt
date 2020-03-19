@@ -1,0 +1,21 @@
+项目框架图一定要
+
+go build -o client.exe D:\go\learn\src\app\chat
+
+connect接收数据为 []byte，可能为整数 也可能是字符串 （通过长度判断，4为整数）
+
+方法调用频率高时，需要考虑操作优化 如服务器推送几十万人消息 - ServerPush， 可以将公共操作提前封装
+
+redis 查询不到数据时不会报错，只能通过取的数据本身来判断
+
+注意不能让其他 error 影响主程序 error : 登入成功消息推送好友时，单个用户推送失败不影响登入成功的返回
+
+
+// TODO: 离线消息
+// 方案一： 有人没接收到时，保存每个人没有收到的离线消息id, 上线登入后推送
+var msgMap map[int]conf.msg  // 每条消息对应id
+var userMsgMap map[int][]int // 每个用户对于消息id切片
+
+// TODO: 注意事项重整一遍
+https://www.toutiao.com/i6801395154264523277
+https://ezchinese.cometochina.com/
