@@ -20,6 +20,6 @@ func main() {
 	fmt.Printf("value is %v, type is %T \n", timestamp, timestamp)
 
 	// 时间常量
-	fmt.Printf("value is %v, type is %T \n", time.Millisecond,  time.Millisecond) // Second Minute Hour Microsecond Nanosecond
+	fmt.Printf("value is %v, type is %T \n", time.Millisecond, time.Millisecond) // Second Minute Hour Microsecond Nanosecond
 
 }
