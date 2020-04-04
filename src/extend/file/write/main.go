@@ -1,13 +1,17 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bufio"
+	"fmt"
 	"io/ioutil"
+	"os"
 )
 
-func PathOrFileExists (name string) (bool, error) {
+var (
+	dir = "test/test.txt"
+)
+
+func PathOrFileExists(name string) (bool, error) {
 	_, err := os.Stat(name)
 	if err == nil {
 		return true, nil
@@ -21,26 +25,26 @@ func PathOrFileExists (name string) (bool, error) {
 func main() {
 
 	// 第一种
-	file , err := os.OpenFile("../test1.txt", os.O_CREATE|os.O_APPEND, 0666)
+	file, err := os.OpenFile(dir, os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		fmt.Println("open file err : ", err)
 	}
 	defer file.Close()
 
 	writer := bufio.NewWriter(file)
-
-	str := ""
-
 	for i := 0; i < 5; i++ {
-
-		writer.WriteString("hello Graden\r\n")
-		str += "hello Graden2\r\n"
-		
-		// file.WriteString("hello Graden\n")	
+		writer.WriteString("hello Garden\r\n")
 	}
-
 	writer.Flush()
 
+	//for i := 0; i < 5; i++ {
+	//	file.WriteString("hello Garden\n")
+	//}
+
 	// 第二种
-	ioutil.WriteFile("../test1.txt", []byte(str), 0666)
+	str := ""
+	for i := 0; i < 5; i++ {
+		str += "hello Dog\r\n"
+	}
+	ioutil.WriteFile(dir, []byte(str), 0666)
 }

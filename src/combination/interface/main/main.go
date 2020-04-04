@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"fmt"
 )
 
@@ -15,41 +15,40 @@ type Screen interface {
 	Show()
 }
 
-type Computer struct {}
+type Computer struct{}
 
-func (c *Computer) Working(usb Usb){
+func (c *Computer) Working(usb Usb) {
 	usb.Read()
 	usb.Write()
 }
 
 // camera
 
-type Camera struct {}
+type Camera struct{}
 
-func (c Camera) Read(){
+func (c Camera) Read() {
 	fmt.Println("Camera Reading ... ")
 }
 
-func (c Camera) Write(){
+func (c Camera) Write() {
 	fmt.Println("Camera writting ... ")
 }
 
-func (c Camera) Show(){
+func (c Camera) Show() {
 	fmt.Println("Camera showing ... ")
 }
 
 // phone
 
-type Phone struct {}
+type Phone struct{}
 
-func (c *Phone) Read(){
+func (c *Phone) Read() {
 	fmt.Println("Phone Reading ... ")
 }
 
-func (c Phone) Write(){
+func (c Phone) Write() {
 	fmt.Println("Phone writting ... ")
 }
-
 
 func main() {
 	computer := Computer{}
@@ -60,7 +59,7 @@ func main() {
 
 	// 细节
 	// 1. interface 不能实例化，但是可以指向一个实现该接口的 “自定义类型” 变量（实例）
-	var u1 Usb 
+	var u1 Usb
 	fmt.Printf("u1 = %+v, u1 = %T, u2 address is %p, camera address is %p \n", u1, u1, &u1, &camera)
 	u1 = camera
 	u1.Write()
@@ -74,12 +73,18 @@ func main() {
 	fmt.Println(s1)
 
 	// 3. 必须同时实现继承的其他接口才能实现该接口
-	type testInter interface {
+	//type testInter interface {
+	//	Screen
+	//	Read()
+	//}
+	//var s2 testInter
+	//s2 = camera
+
+	s2 := interface {
 		Screen
 		Read()
-	}
-	var s2 testInter
-	s2 = camera
+	}(camera)
+
 	// s2 = phone
 	fmt.Println(s2)
 
