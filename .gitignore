@@ -1,2 +1,6 @@
 /.idea/
 *.exe
+/src/extend/test/pprof/demo/cpu_profile
+/src/extend/test/calc/head.txt
+/src/extend/test/pprof/demo/mem_profile
+/src/extend/image/main/sin.png

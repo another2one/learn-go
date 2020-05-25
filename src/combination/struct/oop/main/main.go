@@ -5,12 +5,12 @@ import (
 )
 
 type Student struct {
-	Name string
+	Name  string
 	score int
 }
 
 type Animal struct {
-	Name string
+	Name  string
 	Wight float64
 }
 
@@ -32,24 +32,22 @@ func (p *Univercity) testing() {
 }
 
 type Univercity struct {
-	Student // 继承
-	*Person // 继承
-	en En // 组合
-	Name string
-	Id int
+	Student    // 继承
+	*Person    // 继承
+	en      En // 组合
+	Name    string
+	Id      int
 }
-36.3 zhi
-
 
 func main() {
 	// 封装：隐藏细节，提供接口供外界调用，可以保证安全性同时提升操作简便
 	// 继承：提高代码复用性，管理性
-	college1 := Univercity {
+	college1 := Univercity{
 		Student{},
 		&Person{Name: "lizhi"},
 		En{66},
 		"lizhi",
-		 66,
+		66,
 	}
 	college1.Name = "Univercity"
 	college1.Student.Name = "Student"
