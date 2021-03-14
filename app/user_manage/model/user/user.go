@@ -1,12 +1,12 @@
 package user
 
 type User struct {
-	Id int
-	Name string
-	Sex string
-	Age int
+	Id        int
+	Name      string
+	Sex       string
+	Age       int
 	Telephone string
-	Email string
+	Email     string
 }
 
 func NewUser() User {
