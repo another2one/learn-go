@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"fmt"
 )
 
@@ -34,9 +34,9 @@ func main() {
 	a := 1
 	b := 0
 	fmt.Printf("a = %d, b = %d \n", a, b)
-	a = a^b 1^0 1
-	b = a^b 1^0^1
-	a = a^b 1^0^0
+	a = a ^ b // 1^0 1
+	b = a ^ b // 1^0^1
+	a = a ^ b // 1^0^0
 	fmt.Printf("a = %d, b = %d \n", a, b)
 
 	fmt.Printf(" 9>>3 = %d \n", 9>>3)
@@ -46,7 +46,7 @@ func main() {
 	fmt.Printf(" -9>>3 = %d \n", -9>>3)
 	// -9 源码 			1000 1001
 	// -9 补码 			1111 0111
-	// >> 右移			1111 1110 
+	// >> 右移			1111 1110
 	// 反码				1111 1101
 	// 源码				1000 0010 = -2
 
