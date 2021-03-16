@@ -5,8 +5,8 @@ import (
 )
 
 type UserService struct {
-	UserSlice []user.User 
-	UserNum int // 累计用户数量
+	UserSlice []user.User
+	UserNum   int // 累计用户数量
 }
 
 func NewUserService() *UserService {
@@ -21,10 +21,10 @@ func (userService *UserService) GetList() []user.User {
 }
 
 // 增加用户
-func (this *UserService) Add(user user.User) {
-	user.Id = this.UserNum
-	this.UserNum++
-	this.UserSlice = append(this.UserSlice, user)
+func (userService *UserService) Add(user user.User) {
+	user.Id = userService.UserNum
+	userService.UserNum++
+	userService.UserSlice = append(userService.UserSlice, user)
 
 }
 

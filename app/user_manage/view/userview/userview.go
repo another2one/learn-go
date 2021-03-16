@@ -2,14 +2,14 @@ package userview
 
 import (
 	"fmt"
-	"learn-go/app/user_manage/service/userservice"
 	"learn-go/app/user_manage/model/user"
+	"learn-go/app/user_manage/service/userservice"
 )
 
 type UserView struct {
 	UserService *userservice.UserService
-	firstStep int // 第一次操作选择
-	sureExit string // 是否确认离开
+	firstStep   int    // 第一次操作选择
+	sureExit    string // 是否确认离开
 }
 
 func NewUserview() *UserView {
@@ -17,7 +17,7 @@ func NewUserview() *UserView {
 }
 
 // 输出首页
-func (userView *UserView) firstPage(){
+func (userView *UserView) firstPage() {
 	fmt.Println("------------ 客户信息管理软件 -------------")
 	fmt.Println("\t 1.添加客户")
 	fmt.Println("\t 2.修改客户")
@@ -29,16 +29,16 @@ func (userView *UserView) firstPage(){
 }
 
 // 打印用户列表
-func (userView UserView) PrintUser(){
+func (userView UserView) PrintUser() {
 
 	fmt.Println("ID\t 姓名\t 性别\t 年龄\t 手机\t 邮箱")
 	for _, value := range userView.UserService.GetList() {
-		fmt.Printf("%d\t %v\t %v\t %v\t %v \n", value.Id, value.Name, value.Sex, value.Telephone, value.Email)
+		fmt.Printf("%d\t %v\t %v\t %d\t %v\t %v \n", value.Id, value.Name, value.Sex, value.Age, value.Telephone, value.Email)
 	}
 }
 
 // 增加用户
-func (userView *UserView) AddUser(){
+func (userView *UserView) AddUser() {
 
 	user := user.NewUser()
 	fmt.Printf("输入姓名：")
@@ -56,7 +56,7 @@ func (userView *UserView) AddUser(){
 }
 
 // 增加用户
-func (userView *UserView) EditUser(){
+func (userView *UserView) EditUser() {
 
 	editId := 0
 	fmt.Printf("输入修改人Id：")
@@ -79,9 +79,8 @@ func (userView *UserView) EditUser(){
 	}
 }
 
-
 // 删除用户
-func (userView *UserView) DeleteUser(){
+func (userView *UserView) DeleteUser() {
 
 	deleteId := 0
 	fmt.Printf("输入删除人Id：")
@@ -99,23 +98,21 @@ func (userView *UserView) DeleteUser(){
 }
 
 // 确认操作
-func (userView UserView) Confirm() bool{
+func (userView UserView) Confirm() bool {
 
 	fmt.Printf("是否确定操作？ 输入 y 继续：")
 	fmt.Scanln(&userView.sureExit)
 	if userView.sureExit == "y" {
 		return true
-	}else{
+	} else {
 		return false
 	}
 }
 
-
-
 func (userView *UserView) MainView() {
 
-	main:
-	for{
+main:
+	for {
 
 		userView.firstPage()
 
@@ -126,18 +123,18 @@ func (userView *UserView) MainView() {
 		}
 
 		switch userView.firstStep {
-			case 1:
-				userView.AddUser()
-			case 2:
-				userView.EditUser()
-			case 3:
-				userView.DeleteUser()
-			case 4:
-				userView.PrintUser()
-			case 5:
-				if userView.Confirm() {
-					break main
-				}
+		case 1:
+			userView.AddUser()
+		case 2:
+			userView.EditUser()
+		case 3:
+			userView.DeleteUser()
+		case 4:
+			userView.PrintUser()
+		case 5:
+			if userView.Confirm() {
+				break main
+			}
 		}
-	} 
+	}
 }

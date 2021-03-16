@@ -5,7 +5,7 @@ import (
 	"learn-go/app/user_manage/model/user"
 )
 
-var firstStep int // 第一次操作选择
+var firstStep int   // 第一次操作选择
 var sureExit string // 是否确认离开
 
 // 返回User结构体字段
@@ -16,7 +16,7 @@ func NewUser() UserSlice {
 type UserSlice []*user.User
 
 // 输出首页
-func (userSlice UserSlice) firstPage(){
+func (userSlice UserSlice) firstPage() {
 	fmt.Println("------------ 客户信息管理软件 -------------")
 	fmt.Println("\t 1.添加客户")
 	fmt.Println("\t 2.修改客户")
@@ -37,14 +37,14 @@ func (userSlice UserSlice) PrintIncome() {
 
 // 添加用户
 func (userSlice UserSlice) AddUser(amount float64, desc string) {
-	userSlice = append(userSlice, &User{})
+	userSlice = append(userSlice, &user.User{})
 }
 
 // 用户管理
-func  (userSlice UserSlice) Manage(){
+func (userSlice UserSlice) Manage() {
 
-	main:
-	for{
+main:
+	for {
 
 		userSlice.firstPage()
 
@@ -55,43 +55,43 @@ func  (userSlice UserSlice) Manage(){
 		}
 
 		switch firstStep {
-			case 1:
-				// if len(account.Logs) > 0 {
-				// 	account.PrintIncome()
-				// } else {
-				// 	fmt.Println("没有数据")
-				// }
-			case 2:
-				// fmt.Printf("请输入收入金额：")
-				// fmt.Scanln(&amount)
-				// fmt.Printf("请输入说明：")
-				// fmt.Scanln(&desc)
-				// account.Income(amount, desc)
-			case 3:
-				// if account.Balance <= 0 {
-				// 	fmt.Println("你个小穷子，你 no money !!!")
-				// 	break
-				// }
-				// for {
-				// 	fmt.Printf("请输入支出金额：")
-				// 	fmt.Scanln(&amount)
-				// 	if account.checkAmount(amount) {
-				// 		break
-				// 	}else{
-				// 		fmt.Println("你个小穷子，你只有", account.Balance, "元")
-				// 	}
-				// }
-				// fmt.Printf("请输入说明：")
-				// fmt.Scanln(&desc)
-				// account.Outcome(amount, desc)
-			case 4:
-				
-			case 5:
-				fmt.Printf("是否确定退出？ 输入 y 继续退出：")
-				fmt.Scanln(&sureExit)
-				if sureExit == "y" {
-					break main
-				}
+		case 1:
+			// if len(account.Logs) > 0 {
+			// 	account.PrintIncome()
+			// } else {
+			// 	fmt.Println("没有数据")
+			// }
+		case 2:
+			// fmt.Printf("请输入收入金额：")
+			// fmt.Scanln(&amount)
+			// fmt.Printf("请输入说明：")
+			// fmt.Scanln(&desc)
+			// account.Income(amount, desc)
+		case 3:
+			// if account.Balance <= 0 {
+			// 	fmt.Println("你个小穷子，你 no money !!!")
+			// 	break
+			// }
+			// for {
+			// 	fmt.Printf("请输入支出金额：")
+			// 	fmt.Scanln(&amount)
+			// 	if account.checkAmount(amount) {
+			// 		break
+			// 	}else{
+			// 		fmt.Println("你个小穷子，你只有", account.Balance, "元")
+			// 	}
+			// }
+			// fmt.Printf("请输入说明：")
+			// fmt.Scanln(&desc)
+			// account.Outcome(amount, desc)
+		case 4:
+
+		case 5:
+			fmt.Printf("是否确定退出？ 输入 y 继续退出：")
+			fmt.Scanln(&sureExit)
+			if sureExit == "y" {
+				break main
+			}
 		}
-	} 
+	}
 }
