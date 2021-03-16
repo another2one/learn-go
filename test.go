@@ -1,3 +1,4 @@
+// 暂时测试
 package main
 
 import (
@@ -15,10 +16,11 @@ func main() {
 	}
 	fmt.Println(s1)
 
-	for _, v := range s1 {
+	for _, v := range []int{1, 2, 4} {
+		fmt.Printf("v address is %v \n", &v)
 		go func() {
 			fmt.Println(v)
 		}()
 	}
-	time.Sleep(time.Second * 1)
+	time.Sleep(time.Microsecond * 100)
 }
