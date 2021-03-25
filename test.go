@@ -8,6 +8,29 @@ import (
 	"time"
 )
 
+type CookieSameSite string
+type CookiePriority string
+
+// CookieSourceScheme represents the source scheme of the origin that
+// originally set the cookie. A value of "Unset" allows protocol clients to
+// emulate legacy cookie scope for the scheme. This is a temporary ability and
+// it will be removed in the future.
+//
+// See: https://chromedevtools.github.io/devtools-protocol/tot/Network#type-CookieSourceScheme
+type CookieSourceScheme string
+
+// String returns the CookieSourceScheme as string value.
+func (t CookieSourceScheme) String() string {
+	return string(t)
+}
+
+// CookieSourceScheme values.
+const (
+	CookieSourceSchemeUnset     CookieSourceScheme = "Unset"
+	CookieSourceSchemeNonSecure CookieSourceScheme = "NonSecure"
+	CookieSourceSchemeSecure    CookieSourceScheme = "Secure"
+)
+
 var v = 4
 
 func main() {
@@ -37,7 +60,7 @@ func main() {
 		fmt.Println(v)
 	}
 	fmt.Println(v) //依然可以访问
-	return
+
 	ch := 'b'
 	fmt.Println(ch / 2.0)
 
