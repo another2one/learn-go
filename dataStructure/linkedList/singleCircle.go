@@ -1,4 +1,4 @@
-package main
+package linkedList
 
 import "fmt"
 
@@ -18,7 +18,7 @@ func (scn *SingleCircleNode) InsertAfterNode(node *SingleCircleNode) {
 
 // hn 之前加入节点
 func (scn *SingleCircleNode) InsertBeforeNode(node *SingleCircleNode) {
-	preNode := scn.getPreNode()
+	preNode := scn.GetPreNode()
 	if preNode == nil {
 		return
 	}
@@ -26,7 +26,7 @@ func (scn *SingleCircleNode) InsertBeforeNode(node *SingleCircleNode) {
 	node.Next = scn
 }
 
-func (scn *SingleCircleNode) getPreNode() *SingleCircleNode {
+func (scn *SingleCircleNode) GetPreNode() *SingleCircleNode {
 	temp := scn.Next
 	for {
 		if temp == scn {
@@ -36,7 +36,7 @@ func (scn *SingleCircleNode) getPreNode() *SingleCircleNode {
 	}
 }
 
-func (scn *SingleCircleNode) insertByNumber(node *SingleCircleNode) {
+func (scn *SingleCircleNode) InsertByNumber(node *SingleCircleNode) {
 	temp := scn
 	for {
 		if temp.Next.Number > node.Number {
@@ -50,14 +50,14 @@ func (scn *SingleCircleNode) insertByNumber(node *SingleCircleNode) {
 }
 
 func (scn *SingleCircleNode) DeleteSelf() {
-	preNode := scn.getPreNode()
+	preNode := scn.GetPreNode()
 	if preNode == nil {
 		return
 	}
 	preNode.Next = scn.Next
 }
 
-func (scn *SingleCircleNode) searchNode(name string) *SingleCircleNode {
+func (scn *SingleCircleNode) SearchNode(name string) *SingleCircleNode {
 	if scn.Name == name {
 		return scn
 	}
@@ -73,7 +73,7 @@ func (scn *SingleCircleNode) searchNode(name string) *SingleCircleNode {
 	}
 }
 
-func (scn *SingleCircleNode) showNode() {
+func (scn *SingleCircleNode) ShowNode() {
 	fmt.Println("show node")
 	temp := scn.Next
 	for {
@@ -96,7 +96,7 @@ func NewCircleNode(params ...*SingleCircleNode) *SingleCircleNode {
 	return params[0]
 }
 
-func main() {
+func RunSingleCircle() {
 
 	Node1 := &SingleCircleNode{
 		Name:     "宋江",
@@ -111,7 +111,7 @@ func main() {
 		Next:     Node1,
 	}
 	Node := NewCircleNode(Node1, Node2)
-	Node.showNode()
+	Node.ShowNode()
 
 	node3 := &SingleCircleNode{
 		Name:     "卢俊义",
@@ -119,11 +119,11 @@ func main() {
 		NickName: "玉麒麟",
 		Next:     nil,
 	}
-	Node.insertByNumber(node3)
+	Node.InsertByNumber(node3)
 
-	Node.showNode()
+	Node.ShowNode()
 
 	node3.DeleteSelf()
 
-	Node.showNode()
+	Node.ShowNode()
 }

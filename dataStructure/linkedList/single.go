@@ -1,4 +1,4 @@
-package main
+package linkedList
 
 import "fmt"
 
@@ -56,7 +56,7 @@ func (hn *HeroNode) getLastNode(startNode *HeroNode) *HeroNode {
 	}
 }
 
-func (hn *HeroNode) insertByNumber(node *HeroNode) {
+func (hn *HeroNode) InsertByNumber(node *HeroNode) {
 	temp := headNode
 	for {
 		if temp.Next == nil || temp.Next.Number > node.Number {
@@ -69,7 +69,7 @@ func (hn *HeroNode) insertByNumber(node *HeroNode) {
 	}
 }
 
-func (hn *HeroNode) deleteNode() {
+func (hn *HeroNode) DeleteNode() {
 	preNode := hn.getPreNode(headNode)
 	if preNode == nil {
 		return
@@ -90,7 +90,7 @@ func (hn *HeroNode) searchNode(startNode *HeroNode, name string) *HeroNode {
 	}
 }
 
-func (hn *HeroNode) showNode() {
+func (hn *HeroNode) ShowNode() {
 	temp := headNode
 	for {
 		if temp.Next == nil {
@@ -101,7 +101,7 @@ func (hn *HeroNode) showNode() {
 	}
 }
 
-func main() {
+func runSingle() {
 
 	Node1 := &HeroNode{
 		Name:     "宋江",
@@ -123,11 +123,11 @@ func main() {
 		NickName: "玉麒麟",
 		Next:     nil,
 	}
-	headNode.insertByNumber(node3)
+	headNode.InsertByNumber(node3)
 
-	headNode.showNode()
+	headNode.ShowNode()
 
-	node3.deleteNode()
+	node3.DeleteNode()
 
-	headNode.showNode()
+	headNode.ShowNode()
 }

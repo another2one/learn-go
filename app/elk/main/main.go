@@ -1,8 +1,8 @@
 package main
 
 import (
-	"learn-go/app/elk/utils"
 	"fmt"
+	"learn-go/app/elk/utils"
 	"time"
 )
 
@@ -27,6 +27,6 @@ func main() {
 			time.Sleep(time.Second)
 			continue
 		}
-		utils.KafkaSendMessage(client, msg.Text)
+		utils.KafkaSendMessage(client, msg.Text, "test")
 	}
 }

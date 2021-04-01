@@ -14,7 +14,7 @@ func main() {
 	// 算数运算符
 	var i1 int8 = 89
 	var i2 int8 = 89
-	// i3 := i1 + i2 // 溢出
+	// i3 := i1 + i2 // 溢出 -78
 	i3 := int64(i1) + int64(i2)
 	i4 := int64(i1) * int64(i2)
 	common.PrintOther(i3)
@@ -33,7 +33,7 @@ func main() {
 	// i5 = i5++  // 不允许
 	common.PrintOther(i6)
 	fmt.Printf("还有%d个星期%d天放假 \n", 97/7, 97%7)
-	fmt.Printf("温度为:%v", calc(130))
+	fmt.Printf("温度为:%v \n", calc(130))
 
 	var i7 int64 = 89
 	// common.Print(i6 > i7) // 两个整型或俩个浮点型,位数不同不能比较
@@ -44,7 +44,7 @@ func main() {
 	b = a - b
 	a = a - b
 
-	fmt.Printf("a = %d, b = %d", a, b)
+	fmt.Printf("a = %d, b = %d\n", a, b)
 }
 
 func calc(temp float64) float64 {

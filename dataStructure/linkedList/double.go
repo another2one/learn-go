@@ -1,7 +1,6 @@
-package main
+package linkedList
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -43,13 +42,13 @@ func (wn *WaterNode) InsertBeforeNode(node *WaterNode) {
 }
 
 // 尾部追加节点
-func (wn *WaterNode) pushNode(node *WaterNode) {
-	lastNode := wn.getLastNode()
+func (wn *WaterNode) PushNode(node *WaterNode) {
+	lastNode := wn.GetLastNode()
 	lastNode.Next = node
 	node.Pre = lastNode
 }
 
-func (wn *WaterNode) getLastNode() *WaterNode {
+func (wn *WaterNode) GetLastNode() *WaterNode {
 	temp := wn
 	for {
 		if temp.Next == nil {
@@ -59,7 +58,7 @@ func (wn *WaterNode) getLastNode() *WaterNode {
 	}
 }
 
-func (wn *WaterNode) lens() int {
+func (wn *WaterNode) Lens() int {
 	tempNext := wn.Next
 	tempPre := wn.Pre
 	var len = 1
@@ -73,10 +72,9 @@ func (wn *WaterNode) lens() int {
 			len++
 		}
 	}
-	return len
 }
 
-func (wn *WaterNode) insertByNumber(node *WaterNode) {
+func (wn *WaterNode) InsertByNumber(node *WaterNode) {
 	temp := waterHeadNode
 	for {
 		if temp.Next == nil || temp.Next.Number >= node.Number {
@@ -87,7 +85,7 @@ func (wn *WaterNode) insertByNumber(node *WaterNode) {
 	}
 }
 
-func (wn *WaterNode) insertByNumberWithoutRepeat(node *WaterNode) {
+func (wn *WaterNode) InsertByNumberWithoutRepeat(node *WaterNode) {
 	temp := waterHeadNode
 	for {
 		if temp.Next == nil || temp.Next.Number > node.Number {
@@ -100,7 +98,7 @@ func (wn *WaterNode) insertByNumberWithoutRepeat(node *WaterNode) {
 	}
 }
 
-func (wn *WaterNode) deleteSelf() {
+func (wn *WaterNode) DeleteSelf() {
 
 	if wn.Pre == nil {
 		// 头节点不能删除
@@ -117,7 +115,7 @@ func (wn *WaterNode) deleteSelf() {
 
 }
 
-func (wn *WaterNode) searchNode(name string) (resNode *WaterNode, err error) {
+func (wn *WaterNode) SearchNode(name string) (resNode *WaterNode, err error) {
 	if wn.Name == name {
 		return wn, nil
 	}
@@ -135,10 +133,9 @@ func (wn *WaterNode) searchNode(name string) (resNode *WaterNode, err error) {
 			tempPre = tempPre.Pre
 		}
 	}
-	return resNode, errors.New("not found")
 }
 
-func (wn *WaterNode) showNode() {
+func (wn *WaterNode) ShowNode() {
 	temp := waterHeadNode
 	for {
 		if temp.Next == nil {
@@ -147,35 +144,4 @@ func (wn *WaterNode) showNode() {
 		temp = temp.Next
 		fmt.Println(temp)
 	}
-}
-
-func main() {
-
-	Node1 := &WaterNode{
-		Name:     "宋江",
-		Number:   1,
-		NickName: "及时雨",
-		Next:     nil,
-	}
-	waterHeadNode.pushNode(Node1)
-	Node1.InsertAfterNode(&WaterNode{
-		Name:     "吴用",
-		Number:   3,
-		NickName: "智多星",
-		Next:     nil,
-	})
-
-	node3 := &WaterNode{
-		Name:     "卢俊义",
-		Number:   2,
-		NickName: "玉麒麟",
-		Next:     nil,
-	}
-	waterHeadNode.insertByNumber(node3)
-
-	waterHeadNode.showNode()
-
-	node3.deleteSelf()
-
-	waterHeadNode.showNode()
 }

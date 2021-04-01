@@ -19,6 +19,7 @@ func main() {
 	// 禁用chrome headless
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.Flag("headless", false),
+		chromedp.ProxyServer("http://127.0.0.1:10810/pac/?t=091656"), // 设置代理访问
 	)
 	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
 	defer cancel()
@@ -88,10 +89,10 @@ func fullScreenshot(urlstr string, quality int64, res *[]byte) chromedp.Tasks {
 
 			if contentSize == nil {
 				contentSize = &dom.Rect{
-					0,
-					0,
-					1920,
-					height,
+					X:      0,
+					Y:      0,
+					Width:  1920,
+					Height: height,
 				}
 			}
 

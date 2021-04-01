@@ -1,4 +1,4 @@
-package main
+package linkedList
 
 import (
 	"fmt"
@@ -116,7 +116,7 @@ func (p *Person) DeleteSelf() {
 	}
 }
 
-func main() {
+func RunJosephu() {
 	n := 10
 	head := NewCircleLink(n) // 创建n个小朋友座一圈
 	//p.Show() // 查看所有小朋友

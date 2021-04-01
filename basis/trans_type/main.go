@@ -2,22 +2,21 @@ package main
 
 import (
 	"fmt"
-	"unsafe"
 	"strconv"
+	"unsafe"
 )
 
-func main()  {
+func main() {
 
 	var s string = "li"
 	var i int = 1
 	var f float64 = 1.1
 	var b bool = false
 
-	fmt.Printf("s = %v, s = %T, \t s.size = %d \n", s, s, unsafe.Sizeof(s));
-	fmt.Printf("i = %v, i = %T, \t i.size = %d \n", i, i, unsafe.Sizeof(i));
-	fmt.Printf("f = %v, f = %T, \t f.size = %d \n", f, f, unsafe.Sizeof(f));
-	fmt.Printf("b = %v, b = %T \t b.size = %d \n", b, b, unsafe.Sizeof(b));
-
+	fmt.Printf("s = %v, s = %T, \t s.size = %d \n", s, s, unsafe.Sizeof(s))
+	fmt.Printf("i = %v, i = %T, \t i.size = %d \n", i, i, unsafe.Sizeof(i))
+	fmt.Printf("f = %v, f = %T, \t f.size = %d \n", f, f, unsafe.Sizeof(f))
+	fmt.Printf("b = %v, b = %T \t b.size = %d \n", b, b, unsafe.Sizeof(b))
 
 	// ----------------------  数字间的转换
 	fmt.Println("----------------------  数字间的转换  type(i)")
@@ -27,7 +26,7 @@ func main()  {
 
 	// i32 = i8 + 20 // 不能将int8类型赋给int32
 	i32 = int32(i8 + 20)
-	i32 = int32(i8) + 20
+	i32 = int32(i8) + i32
 
 	i8 = int8(i32) + 127 // 编译能通过，但是结果溢出
 	// i8 = int8(i32) + 128   // 编译不能通过

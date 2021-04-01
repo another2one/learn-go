@@ -59,7 +59,7 @@ func main() {
 	for _, node := range sparseSlice {
 		str += fmt.Sprintf("%d %d %d \n", node.row, node.col, node.val)
 	}
-	//err := ioutil.WriteFile("D:/go/learn/src/dataStructure/sparseArray/sparse.data", []byte(str), 0666)
+	err := ioutil.WriteFile("D:/go/learn/src/dataStructure/sparseArray/sparse.data", []byte(str), 0666)
 	if err != nil {
 		fmt.Println("write error: ", err)
 	}

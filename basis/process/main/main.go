@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"fmt"
 )
 
@@ -36,9 +36,15 @@ func main() {
 
 	var i1 int = 2020
 	// var i2 int32 = 956
-	
-	if (i1 %4  == 0 && i1 % 100 > 0) || i1 % 400 == 0 {
+
+	if (i1%4 == 0 && i1%100 > 0) || i1%400 == 0 {
 		fmt.Printf("%d年是闰年", i1)
 	}
+
+	// 注意
+	if s := 66; s > 65 {
+		fmt.Println("s 大于 65")
+	}
+	// fmt.Println(s) // 错误，s作用域在if内
 
 }

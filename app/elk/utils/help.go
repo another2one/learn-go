@@ -2,9 +2,10 @@ package utils
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/Shopify/sarama"
 	"github.com/hpcloud/tail"
-	"time"
 )
 
 func KafkaProducerInit() (sarama.SyncProducer, error) {
@@ -41,7 +42,7 @@ func KafkaSendMessage(client sarama.SyncProducer, msgStr, topic string) {
 	fmt.Printf("pid:%v offset:%v\n,", pid, offset)
 }
 
-func TailInit(fileName strig) (*Tail, error) {
+func TailInit(fileName string) (*tail.Tail, error) {
 
 	config := tail.Config{
 		Location: &tail.SeekInfo{

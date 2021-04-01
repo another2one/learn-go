@@ -5,8 +5,8 @@ import (
 )
 
 // 外部变量定义
-var(
-	n1 = 1
+var (
+	n1   = 1
 	name = "lizhi" + "66"
 )
 
