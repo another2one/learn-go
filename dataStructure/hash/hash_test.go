@@ -3,15 +3,16 @@ package hash
 import (
 	"math/rand"
 	"testing"
+	"time"
 )
 
 var (
-	num = 10000
-	ht  = GetHTable(num / 100)
+	num        = 10000
+	ht         = GetHTable(num / 100)
+	seedNumber = time.Now().Unix()
 )
 
-func TestHTable_Add(t *testing.T) {
-
+func TestAdd(t *testing.T) {
 	for i := 0; i < num; i++ {
 		user := &User{
 			Id:     i,
@@ -20,22 +21,43 @@ func TestHTable_Add(t *testing.T) {
 		}
 		ht.Add(user)
 	}
+	if ht.Len == num {
+		t.Logf("add succeed \n")
+	} else {
+		t.Errorf("add error \n")
+	}
 }
 
-func TestHTable_Delete(t *testing.T) {
+func TestDelete(t *testing.T) {
 
-	rand.Seed(1458702589)
+	rand.Seed(seedNumber - 1)
 	deleteId := 0
 	for i := 0; i < 10; i++ {
 		deleteId = rand.Intn(num)
 		t.Logf("delete %d \n", deleteId)
 		ht.Delete(deleteId)
+		user, err := ht.Search(deleteId)
+		if user == nil {
+			user = &User{
+				Id:     deleteId,
+				Status: byte(deleteId % 2),
+				Next:   nil,
+			}
+			ht.Add(user)
+		} else {
+			t.Errorf("delete %d error: %v \n", deleteId, err)
+		}
+	}
+	if ht.Len == num {
+		t.Logf("delete succeed \n")
+	} else {
+		t.Errorf("delete error \n")
 	}
 }
 
-func TestHTable_Update(t *testing.T) {
+func TestUpdate(t *testing.T) {
 
-	rand.Seed(145870252412)
+	rand.Seed(seedNumber - 2)
 	updateId := 0
 	status := 0
 	for i := 0; i < 10; i++ {
@@ -50,9 +72,9 @@ func TestHTable_Update(t *testing.T) {
 	}
 }
 
-func TestHTable_Search(t *testing.T) {
+func TestSearch(t *testing.T) {
 
-	rand.Seed(51489523144)
+	rand.Seed(seedNumber - 3)
 	searchId := 0
 	for i := 0; i < 10; i++ {
 		searchId = rand.Intn(num)

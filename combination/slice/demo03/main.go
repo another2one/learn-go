@@ -2,8 +2,7 @@ package main
 
 import "learn-go/combination/slice/utils"
 
-// 去重 利用map[string]struct{} 可实现无序set  reflect
-// reflect.DeepEqual(a, b)
+// slice可以指定索引 []int{2:1} 结果: [0, 0, 1]
 
 func main() {
 

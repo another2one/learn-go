@@ -15,6 +15,7 @@ var (
 )
 
 type HTable struct {
+	Len     int
 	MaxSize int
 	Arr     []*User
 }
@@ -41,6 +42,7 @@ func (ht *HTable) getId(id int) int {
 }
 
 func (ht *HTable) Add(user *User) {
+	ht.Len++
 	ht.Arr[ht.getId(user.Id)].Add(user)
 }
 
@@ -62,6 +64,7 @@ func (head *User) Add(user *User) {
 
 func (ht *HTable) Delete(id int) {
 	ht.Arr[ht.getId(id)].Delete(id)
+	ht.Len--
 }
 
 func (head *User) Delete(id int) {
@@ -87,8 +90,7 @@ func (head *User) Search(id int) (user *User, err error) {
 	for {
 		if temp.Next == nil {
 			return nil, ErrorNotFound
-		}
-		if temp.Next.Id == id {
+		} else if temp.Next.Id == id {
 			return temp.Next, nil
 		}
 		temp = temp.Next
@@ -102,12 +104,11 @@ func (ht *HTable) Update(id int, status byte) (err error) {
 func (head *User) Update(id int, status byte) (err error) {
 	temp := head
 	for {
-		if temp.Next == nil {
-			return ErrorNotFound
-		}
 		if temp.Next.Id == id {
 			temp.Next.Status = status
 			return
+		} else if temp.Next == nil {
+			return ErrorNotFound
 		}
 		temp = temp.Next
 	}

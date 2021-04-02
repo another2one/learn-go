@@ -1,147 +1,98 @@
 package linkedList
 
-import (
-	"fmt"
+import "errors"
+
+var (
+	ErrorInsertBeforeHead = errors.New("数据不能插入头节点之前")
+	ErrorNodeNotFound     = errors.New("没有找到节点")
 )
 
-type WaterNode struct {
-	Pre      *WaterNode
-	Name     string
-	Number   int
-	NickName string
-	Next     *WaterNode
+type UserDate interface {
+	find(v interface{}) bool
 }
 
-var waterHeadNode = &WaterNode{}
+type Link struct {
+	head *doubleNode
+}
 
-// wn 之后加入节点
-func (wn *WaterNode) InsertAfterNode(node *WaterNode) {
-	if wn.Next != nil {
-		temp := wn.Next
-		wn.Next = node
+func NewLink(userData []*UserDate) Link {
+	link := Link{&doubleNode{}}
+	for _, user := range userData {
+		link.head.pushNode(&doubleNode{UserDate: user})
+	}
+	return link
+}
+
+// 查找节点
+func (link *Link) search(v interface{}) (*doubleNode, error) {
+	temp := link.head.Next
+	for {
+		if UserDate.find(v) {
+			return temp, nil
+		}
+		if temp.Next == nil {
+			temp = temp.Next
+		} else {
+			break
+		}
+	}
+	return nil, ErrorNodeNotFound
+}
+
+// 节点
+type doubleNode struct {
+	Pre      *doubleNode // 上一个数据
+	UserDate *UserDate   // 用户数据
+	Next     *doubleNode // 下一个数据
+}
+
+// 节点后面插入数据
+func (doubleNode *doubleNode) insertAfterNode(node *doubleNode) {
+	if doubleNode.Next != nil {
+		temp := doubleNode.Next
+		doubleNode.Next = node
 		node.Next = temp
-		node.Pre = wn
+		node.Pre = doubleNode
 		temp.Pre = node
 	} else {
-		wn.Next = node
-		node.Pre = wn
+		doubleNode.Next = node
+		node.Pre = doubleNode
 	}
 }
 
-// wn 之前加入节点
-func (wn *WaterNode) InsertBeforeNode(node *WaterNode) {
-	if wn.Pre != nil {
-		temp := wn.Pre
-		wn.Pre = node
+// 节点前面插入数据
+func (doubleNode *doubleNode) insertBeforeNode(node *doubleNode) error {
+	if doubleNode.Pre != nil {
+		temp := doubleNode.Pre
+		doubleNode.Pre = node
 		node.Pre = temp
-		node.Next = wn
+		node.Next = doubleNode
 		temp.Next = node
+		return nil
 	} else {
-		fmt.Println("不能插入头节点之前")
+		return ErrorInsertBeforeHead
 	}
+}
+
+// 删除节点
+func (doubleNode *doubleNode) deleteNode() {
+	doubleNode.Pre.Next = doubleNode.Next
 }
 
 // 尾部追加节点
-func (wn *WaterNode) PushNode(node *WaterNode) {
-	lastNode := wn.GetLastNode()
+func (doubleNode *doubleNode) pushNode(node *doubleNode) {
+	lastNode := doubleNode.getLastNode()
 	lastNode.Next = node
 	node.Pre = lastNode
 }
 
-func (wn *WaterNode) GetLastNode() *WaterNode {
-	temp := wn
+// 获取最后一个节点
+func (doubleNode *doubleNode) getLastNode() *doubleNode {
+	temp := doubleNode
 	for {
 		if temp.Next == nil {
 			return temp
 		}
 		temp = temp.Next
-	}
-}
-
-func (wn *WaterNode) Lens() int {
-	tempNext := wn.Next
-	tempPre := wn.Pre
-	var len = 1
-	for {
-		if tempNext.Next != nil {
-			tempNext = tempNext.Next
-			len++
-		}
-		if tempPre.Pre != nil {
-			tempPre = tempPre.Pre
-			len++
-		}
-	}
-}
-
-func (wn *WaterNode) InsertByNumber(node *WaterNode) {
-	temp := waterHeadNode
-	for {
-		if temp.Next == nil || temp.Next.Number >= node.Number {
-			temp.InsertAfterNode(node)
-			break
-		}
-		temp = temp.Next
-	}
-}
-
-func (wn *WaterNode) InsertByNumberWithoutRepeat(node *WaterNode) {
-	temp := waterHeadNode
-	for {
-		if temp.Next == nil || temp.Next.Number > node.Number {
-			temp.InsertAfterNode(node)
-			break
-		} else if temp.Next.Number == node.Number {
-			fmt.Println("sorry! 有钱真的可以为所欲为 ！！！但是不能重复插入")
-		}
-		temp = temp.Next
-	}
-}
-
-func (wn *WaterNode) DeleteSelf() {
-
-	if wn.Pre == nil {
-		// 头节点不能删除
-		return
-	}
-
-	if wn.Next != nil {
-		wn.Pre.Next = wn.Next
-		wn.Next.Pre = wn.Pre
-	} else {
-		// 尾节点不能删除
-		wn.Pre.Next = nil
-	}
-
-}
-
-func (wn *WaterNode) SearchNode(name string) (resNode *WaterNode, err error) {
-	if wn.Name == name {
-		return wn, nil
-	}
-	tempNext := wn.Next
-	tempPre := wn.Pre
-	for {
-		if tempNext.Name == name {
-			resNode = tempNext
-		} else if tempNext.Next != nil {
-			tempNext = tempNext.Next
-		}
-		if tempPre.Name == name {
-			resNode = tempPre
-		} else if tempPre.Pre != nil {
-			tempPre = tempPre.Pre
-		}
-	}
-}
-
-func (wn *WaterNode) ShowNode() {
-	temp := waterHeadNode
-	for {
-		if temp.Next == nil {
-			break
-		}
-		temp = temp.Next
-		fmt.Println(temp)
 	}
 }

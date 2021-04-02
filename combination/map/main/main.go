@@ -22,8 +22,8 @@ func main() {
 
 	// 第三种
 	m3 := map[string]string{
-		"我是谁":"李志", 
-		"lizhi":"ll",
+		"我是谁":   "李志",
+		"lizhi": "ll",
 	}
 	fmt.Printf("%v, %d \n", m3, len(m3))
 
@@ -43,8 +43,8 @@ func main() {
 	mapSlice := make([]map[string]string, 2)
 	fmt.Printf("%v, %T \n", mapSlice, mapSlice)
 
-	testMap :=  map[string]map[string]string{
-		"lizhi": map[string]string {
+	testMap := map[string]map[string]string{
+		"lizhi": map[string]string{
 			"nickName": "ss",
 			"passWord": "666",
 		},
@@ -63,4 +63,4 @@ func main() {
 
 func change(ss map[int]int) {
 	ss[2] = 4
-} 
+}
