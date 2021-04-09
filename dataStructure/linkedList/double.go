@@ -8,41 +8,71 @@ var (
 )
 
 type UserDate interface {
-	find(v interface{}) bool
+	Find(name interface{}) bool
 }
+
+const (
+	Repeat = iota
+	Unique
+)
 
 type Link struct {
-	head *doubleNode
+	head     *doubleNode
+	isUnique int
 }
 
-func NewLink(userData []*UserDate) Link {
-	link := Link{&doubleNode{}}
+func NewLink(userData []UserDate, isUnique int) Link {
+	if isUnique != Unique && isUnique != Repeat {
+		isUnique = Repeat
+	}
+	link := Link{&doubleNode{}, isUnique}
 	for _, user := range userData {
 		link.head.pushNode(&doubleNode{UserDate: user})
 	}
 	return link
 }
 
+func NewNode(userData UserDate) *doubleNode {
+	return &doubleNode{UserDate: userData}
+}
+
 // 查找节点
-func (link *Link) search(v interface{}) (*doubleNode, error) {
+func (link *Link) search(name interface{}) (int, *doubleNode, error) {
 	temp := link.head.Next
+	len := 1
 	for {
-		if UserDate.find(v) {
-			return temp, nil
+		if temp != nil && temp.UserDate.Find(name) {
+			return len, temp, nil
 		}
-		if temp.Next == nil {
+		if temp.Next != nil {
+			len++
 			temp = temp.Next
 		} else {
 			break
 		}
 	}
-	return nil, ErrorNodeNotFound
+	return len, nil, ErrorNodeNotFound
+}
+
+// 链表长度
+func (link *Link) len() int {
+	temp := link.head
+	len := 0
+	for {
+		if temp.Next != nil {
+			len++
+			temp = temp.Next
+		} else {
+			break
+		}
+	}
+	return len
 }
 
 // 节点
 type doubleNode struct {
 	Pre      *doubleNode // 上一个数据
-	UserDate *UserDate   // 用户数据
+	UserDate UserDate    // 用户数据
 	Next     *doubleNode // 下一个数据
 }
 

@@ -7,7 +7,7 @@ import (
 
 type Student struct {
 	Name string
-	Age int
+	Age  int
 }
 
 func test(i interface{}) {
@@ -16,14 +16,14 @@ func test(i interface{}) {
 func main() {
 
 	var (
-		s = "66"
-		i = 6
-		t = true
+		s     = "66"
+		i     = 6
+		t     = true
 		slice = []int{66, 12, 16}
-		m = map[int]int{1:2, 2:3}
+		m     = map[int]int{1: 2, 2: 3}
 		model = &Student{}
-		elem reflect.Value
-		st reflect.Type
+		elem  reflect.Value
+		st    reflect.Type
 	)
 
 	Canset(&s)
@@ -70,7 +70,7 @@ func Canset(i interface{}) {
 	s := reflect.ValueOf(i).Elem()
 	if s.CanSet() {
 		fmt.Printf("%v can set \n", s.Kind())
-	}else{
+	} else {
 		fmt.Printf("%v can't set \n", s.Kind())
 	}
 }

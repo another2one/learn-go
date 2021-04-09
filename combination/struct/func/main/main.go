@@ -61,6 +61,30 @@ func strAddNumber(v ...string) string {
 	return v[0] + fmt.Sprint(len(v[0]))
 }
 
+type userInter interface {
+	Edit1(name interface{})
+}
+
+type User struct {
+	Name string
+}
+
+func (user *User) Edit1(name interface{}) {
+	switch name := name.(type) {
+	case string:
+		user.Name = name
+	}
+}
+
+// 不能用 *userInter  具体在
+type UserInterSlice []userInter
+
+func (userInterSlice UserInterSlice) Edit1(name interface{}) {
+	for _, v := range userInterSlice {
+		v.Edit1(name)
+	}
+}
+
 func main() {
 
 	var test2 Student
@@ -81,4 +105,15 @@ func main() {
 
 	// 函数类型及参数
 	fmt.Printf("函数类型及参数测试：%s \n", strWalk([]string{"我", "是", "谁"}, strAddNumber))
+
+	// interface{} 的值不是任意类型，而是 interface{} 类型
+	u1 := User{"666"}
+	u2 := User{"777"}
+	users := []userInter{&u1, &u2}
+	for _, v := range users {
+		v.Edit1("lizhi")
+	}
+
+	fmt.Println(u1.Name)
+	fmt.Println(u2.Name)
 }

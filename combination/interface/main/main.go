@@ -50,6 +50,12 @@ func (c Phone) Write() {
 	fmt.Println("Phone writting ... ")
 }
 
+func PrintAll(vals []interface{}) {
+	for _, val := range vals {
+		fmt.Println(val)
+	}
+}
+
 func main() {
 	computer := Computer{}
 	camera := Camera{}
@@ -93,4 +99,17 @@ func main() {
 	// 	testInter
 	// 	Usb
 	// }
+
+	// 5
+	screenes := []Screen{Camera{}}
+	for _, v := range screenes {
+		v.Show()
+	}
+	names := []string{"stanley", "david", "oscar"}
+	// PrintAll(names) // cannot use names (variable of type []string) as []interface{}
+	vals := make([]interface{}, len(names))
+	for i, v := range names {
+		vals[i] = v
+	}
+	PrintAll(vals)
 }
