@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -9,11 +8,6 @@ type CalcStack struct {
 	maxSize, head int
 	data          []int
 }
-
-var (
-	ErrorStackEmpty = errors.New("stack empty")
-	ErrorStackFull  = errors.New("stack full")
-)
 
 func (as *CalcStack) push(i int) error {
 	if as.head == as.maxSize-1 {

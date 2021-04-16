@@ -9,9 +9,9 @@ func main() {
 	// **********************  几种定义使用方法 ************************
 
 	// 第一种 make分配空间后才能使用
-	var m1 map[string]string
+	// var m1 map[string]string
 	// m1["我是谁"] = "李志" //报错 panic: assignment to entry in nil map
-	m1 = make(map[string]string, 2)
+	m1 := make(map[string]string, 2)
 	m1["我是谁"] = "李志"
 	fmt.Printf("%v, %d \n", m1, len(m1))
 
@@ -44,7 +44,7 @@ func main() {
 	fmt.Printf("%v, %T \n", mapSlice, mapSlice)
 
 	testMap := map[string]map[string]string{
-		"lizhi": map[string]string{
+		"lizhi": {
 			"nickName": "ss",
 			"passWord": "666",
 		},

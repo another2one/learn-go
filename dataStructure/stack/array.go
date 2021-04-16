@@ -7,7 +7,15 @@ import (
 
 type ArrayStack struct {
 	maxSize, head int
-	data          []int
+	data          []interface{}
+}
+
+func NewArrayStack(maxSize int) *ArrayStack {
+	return &ArrayStack{
+		maxSize: maxSize,
+		head:    -1,
+		data:    make([]interface{}, maxSize),
+	}
 }
 
 var (
@@ -47,23 +55,4 @@ func (as *ArrayStack) show() {
 		i--
 	}
 	fmt.Println()
-}
-
-func main() {
-	as := ArrayStack{
-		maxSize: 8,
-		head:    -1,
-		data:    make([]int, 8),
-	}
-	_, err := as.pop()
-	if err != nil {
-		fmt.Println(err)
-	}
-	as.push(2)
-	as.push(3)
-	as.push(4)
-	as.pop()
-	as.push(4)
-	as.pop()
-
 }

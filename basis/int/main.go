@@ -16,5 +16,7 @@ func main() {
 	fmt.Printf("n1 type is %T, size is %d, n1 type is %T, int64 size is %d \n", n1, unsafe.Sizeof(n1), n2, unsafe.Sizeof(n2))
 
 	// 转换为相同类型才能进行大小比较
-	fmt.Printf("%v", int64(n1) == n2)
+	fmt.Printf("%v \n", int64(n1) == n2)
+
+	// 最大值 math.MaxInt8
 }

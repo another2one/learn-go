@@ -55,5 +55,5 @@ func main() {
 	college1.testing()
 	college1.en.enscore = 600
 	college1.Student.testing()
-	fmt.Printf("%+v \n", college1.Wight)
+	fmt.Printf("%+v \n", college1)
 }

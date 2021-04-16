@@ -18,11 +18,13 @@ func init() {
 		panic(err)
 	} else {
 		InfoLog = log.New(fileHandler, "[INFO]: ", log.Ldate|log.Ltime|log.Lshortfile)
+		fileHandler.Write([]byte("sssss"))
 	}
 
 	if fileHandler, err := os.OpenFile(getLogFileName("error"), os.O_CREATE|os.O_APPEND, 0666); err != nil {
 		panic(err)
 	} else {
+		// 错误同时在文件和终端输出
 		ErrorLog = log.New(io.MultiWriter(fileHandler, os.Stdout), "[ERROR]: ", log.Ldate|log.Ltime|log.Lshortfile)
 	}
 }
@@ -42,6 +44,6 @@ func getLogFileName(logType string) string {
 
 func main() {
 
-	InfoLog.Print("666")
+	InfoLog.Printf("%v \n", "666")
 	ErrorLog.Print("666")
 }

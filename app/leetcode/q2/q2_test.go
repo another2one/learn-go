@@ -23,6 +23,7 @@ func Test_addTwoNumbers(t *testing.T) {
 		args args
 		want *ListNode
 	}{
+		// TODO: Add test cases.
 		{"test sigle", args{&ListNode{7, nil}, &ListNode{7, nil}}, &ListNode{4, &ListNode{1, nil}}},
 		{
 			"test multi",
