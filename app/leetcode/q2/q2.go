@@ -55,7 +55,7 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 	l1 = l1.Next
 	l2 = l2.Next
-	for l1 != nil && l2 != nil {
+	for l1 != nil || l2 != nil {
 		if l1 != nil {
 			v1 = l1.Val
 		} else {
@@ -67,10 +67,15 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			v2 = 0
 		}
 		i, v = getNumsAfterAdd(v1, v2, i)
+
 		sn.Val = v
 
-		l1 = l1.Next
-		l2 = l2.Next
+		if l1 != nil {
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			l2 = l2.Next
+		}
 
 		if l1 != nil || l2 != nil || i > 0 {
 			sn.Next = &ListNode{}

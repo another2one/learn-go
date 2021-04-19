@@ -87,9 +87,6 @@ func main() {
 	// 循环截图
 	for _, url := range urls {
 		log.Println(url, "......")
-		if !strings.Contains(url, "wmapp") {
-			continue
-		}
 		// capture entire browser viewport
 		if err := chromedp.Run(ctx, fullScreenshot(url, 90)); err != nil {
 			log.Println(err)
@@ -115,6 +112,7 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 
 		// 获取网页高度
 		chromedp.Evaluate(`$(document).height()`, &height),
+		chromedp.Evaluate(`$(document).width()`, &width),
 
 		// 获取截图信息
 		chromedp.ActionFunc(func(ctx context.Context) error {
@@ -129,9 +127,11 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 				contentSize = &dom.Rect{
 					X:      0,
 					Y:      0,
-					Width:  1920,
+					Width:  width,
 					Height: height,
 				}
+			} else {
+				log.Printf("%+v \n", contentSize)
 			}
 
 			width, height := int64(math.Ceil(contentSize.Width)), int64(math.Ceil(contentSize.Height))
@@ -157,6 +157,7 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 					Height: contentSize.Height,
 					Scale:  1,
 				}).
+				WithCaptureBeyondViewport(true).
 				Do(ctx)
 
 			if err != nil {
@@ -203,7 +204,7 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 			width, height := int64(math.Ceil(contentSize.Width)), int64(math.Ceil(contentSize.Height))
 
 			// force viewport emulation
-			err = emulation.SetDeviceMetricsOverride(width, height, 1, false).
+			err = emulation.SetDeviceMetricsOverride(width, height, 1, true).
 				WithScreenOrientation(&emulation.ScreenOrientation{
 					Type:  emulation.OrientationTypePortraitPrimary,
 					Angle: 0,
