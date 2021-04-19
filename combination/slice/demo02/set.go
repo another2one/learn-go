@@ -56,3 +56,24 @@ func SliceToSet2(s1 []int) []int {
 	}
 	return s2
 }
+
+// 去重 直接对比
+func StringSliceToSet(s1 []string) []string {
+	if len(s1) <= 1 {
+		return s1
+	}
+	s2 := s1[:1]
+	for _, v := range s1[1:] {
+		tag := true
+		for _, item := range s2 {
+			if item == v {
+				tag = false
+				break
+			}
+		}
+		if tag {
+			s2 = append(s2, v)
+		}
+	}
+	return s2
+}

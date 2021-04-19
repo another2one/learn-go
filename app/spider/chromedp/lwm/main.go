@@ -5,11 +5,12 @@ package main
 import (
 	"context"
 	"io/ioutil"
+	"learn-go/combination/slice/demo02"
 	"log"
 	"math"
 	"net/http"
+	"os"
 	"strings"
-	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/chromedp/cdproto/dom"
@@ -21,7 +22,8 @@ import (
 
 var (
 	height float64
-	domian = `https://www-beta.lewaimai.com`
+	width  float64
+	domian = `https://www.lewaimai.com`
 )
 
 const (
@@ -30,9 +32,20 @@ const (
 )
 
 func main() {
+
+	// 清空pic文件夹
+	err := os.RemoveAll("pic")
+	if err != nil {
+		log.Fatalln("clean pic dir error: ", err)
+	}
+	err = os.Mkdir("pic", 0666)
+	if err != nil {
+		log.Fatalln("create pic dir error: ", err)
+	}
+
 	// 禁用chrome headless
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
-		chromedp.Flag("headless", false),
+		chromedp.Flag("headless", false), // debug模式：false会开启浏览器，可以实时看到效果
 		chromedp.WindowSize(1920, 1080),
 		// chromedp.ProxyServer("http://127.0.0.1:10810/pac/?t=091656"), // 设置代理访问
 	)
@@ -68,15 +81,17 @@ func main() {
 		}
 	})
 
-	// 循环截图 TODO tab
+	// 去重 TODO: 为啥重复访问会卡住
+	urls = demo02.StringSliceToSet(urls)
+
+	// 循环截图
 	for _, url := range urls {
-		newCtx, cancel := context.WithTimeout(ctx, time.Second*200)
-		defer cancel()
+		log.Println(url, "......")
 		if !strings.Contains(url, "wmapp") {
 			continue
 		}
-		// capture entire browser viewport, returning png with quality=90
-		if err := chromedp.Run(newCtx, fullScreenshot(url, 90)); err != nil {
+		// capture entire browser viewport
+		if err := chromedp.Run(ctx, fullScreenshot(url, 90)); err != nil {
 			log.Println(err)
 		}
 	}
@@ -141,7 +156,8 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 					Width:  contentSize.Width,
 					Height: contentSize.Height,
 					Scale:  1,
-				}).Do(ctx)
+				}).
+				Do(ctx)
 
 			if err != nil {
 				log.Printf("%s 获取截图错误：%s \n", url, err)
@@ -154,7 +170,6 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 			return nil
 		}),
 
-		// FIXME:样式错乱
 		chromedp.Emulate(device.IPhoneX),
 
 		// 重刷
@@ -165,12 +180,11 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 
 		// 获取网页高度
 		chromedp.Evaluate(`$(document).height()`, &height),
+		chromedp.Evaluate(`$(document).width()`, &width),
 
 		// 获取截图信息
 		chromedp.ActionFunc(func(ctx context.Context) error {
 
-			log.Fatal("666")
-			return nil
 			// get layout metrics
 			_, _, contentSize, err := page.GetLayoutMetrics().Do(ctx)
 			if err != nil {
@@ -181,7 +195,7 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 				contentSize = &dom.Rect{
 					X:      0,
 					Y:      0,
-					Width:  375,
+					Width:  width,
 					Height: height,
 				}
 			}
@@ -208,7 +222,9 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 					Width:  contentSize.Width,
 					Height: contentSize.Height,
 					Scale:  1,
-				}).Do(ctx)
+				}).
+				WithCaptureBeyondViewport(true).
+				Do(ctx)
 
 			if err != nil {
 				log.Printf("%s 获取截图错误：%s \n", url, err)
@@ -232,5 +248,6 @@ func getNameByUrl(url string, urlType int8) string {
 		return "pic/index" + fileSuffix
 	}
 	fileName := strings.Replace(url, domian+"/", "", 1)
+	fileName = strings.Replace(fileName, ".html", "", 1)
 	return "pic/" + fileName + fileSuffix
 }
