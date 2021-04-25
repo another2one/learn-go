@@ -48,4 +48,16 @@ func main() {
 	// 1
 	str := fmt.Sprintf("%q \n", byteArr)
 	fmt.Println("str: ", str)
+
+	var a1 = [...]int8{1, 2, 3, 4, 5}
+	fmt.Printf("a1 address = %p\n", &a1)
+
+	// 数组反转`
+	fmt.Printf("a1[2:] type is %T address = %p\n", a1[2:], a1[2:])
+	a1Len := len(a1)
+	for start := 0; start <= int(math.Floor(float64(a1Len)/2)); {
+		a1[start], a1[a1Len-start-1] = a1[a1Len-start-1], a1[start]
+		start++
+	}
+	fmt.Printf("%v reverse to %v \n", [...]int8{1, 2, 3, 4, 5}, a1)
 }
