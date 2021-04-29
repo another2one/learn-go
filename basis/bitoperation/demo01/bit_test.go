@@ -114,7 +114,7 @@ func Test_getTcpBit(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{"test01", args{0, 3, 3}, uint8(getBinaryValue([8]uint8{0, 0, 0, 1, 1, 0, 1, 1}))},
-		{"test01", args{0, 4, 1}, uint8(getBinaryValue([8]uint8{0, 0, 1, 0, 0, 0, 0, 1}))},
+		{"test02", args{0, 4, 1}, uint8(getBinaryValue([8]uint8{0, 0, 1, 0, 0, 0, 0, 1}))},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

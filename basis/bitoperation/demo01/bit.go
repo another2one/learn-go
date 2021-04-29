@@ -59,15 +59,17 @@ func setAnyTo0(a int8, p int) int8 {
 //  p - 指定位置 0-7
 func getAny(a int8, p int) int8 {
 	p = p % 8
-	if a < 0 {
-		a = -a
-	}
+
 	if p == 0 {
 		if a > 0 {
 			return 0
 		} else {
 			return 1
 		}
+	}
+
+	if a < 0 {
+		a = -a
 	}
 	return (a << p) >> 7
 }
