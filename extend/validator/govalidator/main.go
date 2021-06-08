@@ -1,7 +1,6 @@
 package main
 
 // https://www.toutiao.com/i6736832899640738315/
-// "github.com/go-playground/validator/v10"
 import (
 	"fmt"
 
