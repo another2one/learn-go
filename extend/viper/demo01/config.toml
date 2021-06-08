@@ -1,0 +1,9 @@
+redis = "127.0.0.1:3300"
+title = "toml exaples"
+
+[mysql]
+  host = "192.168.1.1"
+  password = "root123456"
+  port = 3303
+  ports = [1201,1611,1235]
+  username = "root"

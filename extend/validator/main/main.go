@@ -1,9 +1,9 @@
 package main
 
 // https://www.toutiao.com/i6736832899640738315/
+// "github.com/go-playground/validator/v10"
 import (
 	"fmt"
-	"reflect"
 
 	"github.com/asaskevich/govalidator"
 )
@@ -24,8 +24,8 @@ func main() {
 	fmt.Println(govalidator.IsMAC(mac)) // false
 
 	// 判断数字是否在指定范围内
-	dig := 101               // string类型也可以用
-	fmt.Println(dig, 0, 100) // false
+	dig := 101                                    // string类型也可以用
+	fmt.Println(govalidator.InRange(dig, 0, 100)) // false
 
 	f := foo{
 		A: "192.168.1.1",
@@ -41,10 +41,4 @@ func main() {
 
 	// 驼峰转下划线
 	fmt.Println(govalidator.CamelCaseToUnderscore("userFirstName"))
-
-	var x interface{} = 7
-	i := x.(int)
-	fmt.Println(reflect.TypeOf(i))
-	j, _ := x.(int32)
-	fmt.Println(j)
 }
