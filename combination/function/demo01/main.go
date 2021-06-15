@@ -8,6 +8,7 @@ func double(a *int) {
 	fmt.Printf("func-p address %p\n", &a)
 }
 
+// func 为值传递
 func main() {
 	a := 1
 	p := &a
