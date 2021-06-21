@@ -4,6 +4,28 @@ import (
 	"fmt"
 )
 
+// 变量命名规范
+//  变量名称必须由数字、字母、下划线组成
+//  标识符开头不能是数字
+//  标识符不能是保留字和关键字
+//  区分大小写
+var (
+// 1a string
+// abc string
+// // a&b string // 非法
+// 年龄     string
+// bool   string
+// public string
+// a2     string
+// // a# string // 非法
+// a2_1  string
+// class string
+// new   string
+// // f unction string // 非法
+// function string
+// a@s string //非法
+)
+
 // 外部变量定义
 var (
 	n1   = 1

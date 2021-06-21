@@ -41,6 +41,7 @@ func main() {
 	// 3
 	var slice3 []int
 	// slice3 = make([]int, 2, 5)
+	// len 0 cap 0 此时无法使用 slice3[0] = 1 会报错：越界
 	utils.PrintSlice(slice3, "slice3")
 	// 4
 	arr4 := [...]int{1, 3, 5, 7, 9}
