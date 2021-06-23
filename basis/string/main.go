@@ -22,6 +22,7 @@ func main() {
 	fmt.Printf("%q \n", []rune(s1)[2])
 	// 长度
 	fmt.Printf("len(s1) = %d \n", len(s1))                                       // 6
+	fmt.Printf("len(s1) = %d \n", len([]rune(s1)))                               // 3
 	fmt.Printf("utf8.RuneCountInString(s1) = %d \n", utf8.RuneCountInString(s1)) // 3
 
 	fmt.Printf("s1 len = %d, address = %p \n", len(s1), &s1)
@@ -49,5 +50,22 @@ func main() {
 
 	fmt.Printf("string(65) = %q \n", string(65))       // "A"
 	fmt.Printf("string(65) = %q \n", strconv.Itoa(65)) // 65
+
+	// 特殊表示
+	fmt.Println("\xe6\x96\xb0世界" == "新世界")
+	fmt.Println('\u65b0' == '新')
+	// unicode转utf-8
+	var ss rune = '\xfe'
+	var p = make([]byte, 4)
+	size := utf8.EncodeRune(p, ss)
+	fmt.Println(p[:size])
+
+	// 字符串反转
+	originStr := "你好abc啊哈哈a"
+	orune := []rune(originStr)
+	for i, j := 0, len(orune)-1; i < j; i, j = i+1, j-1 {
+		orune[i], orune[j] = orune[j], orune[i]
+	}
+	fmt.Println(string(orune))
 
 }

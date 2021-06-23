@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // range 遍历的值是拷贝的副本
 
@@ -67,4 +69,11 @@ func main() {
 	// 	fmt.Printf("m = %v \n", m) // 可以正常退出 原因 map 无序 实际结果也不定
 	// }
 
+	// 4 string
+	data := "你是谁啊???\xfd\xfe\xff" // þ 的unicode为 \xfe
+	// 有问题 string range时以rune形式，碰到非正常utf8时会转为0xfffd
+	for _, v := range data {
+		fmt.Printf("%#x \n", v)
+	}
+	fmt.Println([]byte(data))
 }

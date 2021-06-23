@@ -2,24 +2,20 @@ package main
 
 import (
 	"fmt"
-	"sync"
-	"sync/atomic"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"runtime"
+	"runtime/trace"
 )
 
-const N = 1000
-
 func main() {
-	// 编程实现：使用add原子操作来并发地递增一个int32值。创建1000个新协程。每个新协程将整数n的值增加1。 原子操作保证这1000个新协程之间不会发生数据竞争，最终程序打印1000
-	var sum int64 = 0
-
-	var wg sync.WaitGroup
-	for i := 0; i < N; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			atomic.AddInt64(&sum, 1)
-		}()
+	trace.Start(os.Stderr)
+	defer trace.Stop()
+	num := 6
+	for index := 0; index < num; index++ {
+		resp, _ := http.Get("https://www.baidu.com")
+		_, _ = ioutil.ReadAll(resp.Body)
 	}
-	wg.Wait()
-	fmt.Println(sum)
+	fmt.Printf("此时goroutine个数= %d\n", runtime.NumGoroutine())
 }
