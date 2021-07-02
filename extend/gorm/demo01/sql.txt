@@ -1,0 +1,9 @@
+
+2021/07/02 11:34:26 D:/phpstudy_pro/WWW/git/learn-go/extend/gorm/demo01/main.go:54
+[1.392ms] [rows:1] SELECT * FROM `credit` WHERE name = 'lizhi' and phone = '11129996211' ORDER BY `credit`.`id` DESC LIMIT 1
+
+2021/07/02 11:34:26 D:/phpstudy_pro/WWW/git/learn-go/extend/gorm/demo01/main.go:47
+[183.837ms] [rows:1] INSERT INTO `credit` (`user_id`,`name`,`photos`,`phone`,`amount`,`status`,`is_del`,`create_time`,`update_time`) VALUES (0,'lizhi','','11129996211','0.00',0,0,1625196866,0)
+
+2021/07/02 11:34:26 D:/phpstudy_pro/WWW/git/learn-go/extend/gorm/demo01/main.go:54
+[0.985ms] [rows:1] SELECT * FROM `credit` WHERE name = 'lizhi' and phone = '11129996211' ORDER BY `credit`.`id` DESC LIMIT 1

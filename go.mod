@@ -13,11 +13,10 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/garyburd/redigo v1.6.2
 	github.com/go-playground/validator/v10 v10.6.1
-	github.com/go-sql-driver/mysql v1.5.0
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang/protobuf v1.4.3
 	github.com/gorilla/mux v1.8.0
 	github.com/hpcloud/tail v1.0.0
-	github.com/jinzhu/gorm v1.9.16
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.7.1
@@ -26,4 +25,6 @@ require (
 	google.golang.org/grpc v1.33.2
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
+	gorm.io/driver/mysql v1.1.1
+	gorm.io/gorm v1.21.11
 )
