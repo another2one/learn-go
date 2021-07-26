@@ -11,15 +11,15 @@ package main
 // 3. 关闭连接
 
 import (
-	"net"
-	"fmt"
 	"bufio"
+	"fmt"
+	"net"
 	"os"
 	"strings"
 )
 
-func reciveMsg(conn net.Conn){
-	for{
+func reciveMsg(conn net.Conn) {
+	for {
 		b := make([]byte, 1024)
 		n, err := conn.Read(b)
 		if err != nil {
@@ -51,7 +51,7 @@ func main() {
 			fmt.Println("byebye ... ")
 			break
 		}
-		fmt.Printf("send : %q, len is %d \n", str, len(str) )
+		fmt.Printf("send : %q, len is %d \n", str, len(str))
 		conn.Write([]byte(str))
-	}	
+	}
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type Student struct {
-	Name string
+	Name string `form:"666"`
 	Age  int
 }
 
@@ -51,6 +51,12 @@ func main() {
 	fmt.Println("elem:", elem)
 	fmt.Println()
 	elem.FieldByName("Name").SetString("lipan")
+	fieldName, ok := st.FieldByName("Name")
+	if !ok {
+		fmt.Println("not have field Name")
+	} else {
+		fmt.Println("Name's tag form = ", fieldName.Tag.Get("form"))
+	}
 	fmt.Println("elem.FieldByName.SetString = lipan")
 	fmt.Println("model: ", model)
 	fmt.Println("model1: ", model1)

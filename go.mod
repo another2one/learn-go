@@ -21,6 +21,7 @@ require (
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.7.1
 	golang.org/x/net v0.0.0-20210119194325-5f4716e94777
+	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 	golang.org/x/sys v0.0.0-20210531225629-47163c9f4e4f // indirect
 	google.golang.org/grpc v1.33.2
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
