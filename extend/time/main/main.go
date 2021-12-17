@@ -39,6 +39,16 @@ func main() {
 	// 加减时间
 	timeBefore1hour := now.Add(time.Hour * 1) // 1小时前
 	fmt.Printf("value is %v, type is %T \n", timeBefore1hour, timeBefore1hour)
+	// ParseDuration parses a duration string.
+	// A duration string is a possibly signed sequence of decimal numbers,
+	// each with optional fraction and a unit suffix,
+	// such as "300ms", "-1.5h" or "2h45m".
+	//  Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
+	// 10分钟前
+	m, _ := time.ParseDuration("-1m")
+	m1 := now.Add(m)
+	fmt.Println(m1)
+
 	// 月初
 	timeBeginMonth := time.Now().AddDate(0, -1, -1*now.Day()+1)
 	timeBeginMonth = time.Date(timeBeginMonth.Year(), timeBeginMonth.Month(), timeBeginMonth.Day(), 0, 0, 0, 0, time.Local)

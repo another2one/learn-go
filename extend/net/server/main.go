@@ -11,17 +11,17 @@ package main
 // 3. 关闭连接
 
 import (
-	"net"
 	"fmt"
-	"strings"
+	"net"
 	"strconv"
+	"strings"
 )
 
 type User struct {
-	Id int
-	Conn net.Conn
-	Name string
-	Status bool // 在线状态
+	Id      int
+	Conn    net.Conn
+	Name    string
+	Status  bool        // 在线状态
 	msgChan chan string // 消息
 	// CurrentChat *ChatObj // 当前聊天对象
 }
@@ -39,7 +39,6 @@ type User struct {
 // 	UidSlice []int // 包含的用户id
 // }
 
-
 var (
 	UserSlice = make([]*User, 0)
 )
@@ -49,7 +48,7 @@ const (
 )
 
 // 发送消息
-func sendMsg(i int){
+func sendMsg(i int) {
 	for msg := range UserSlice[i].msgChan {
 		UserSlice[i].Conn.Write([]byte(strings.Trim(msg, " \r\n") + "\n"))
 	}
@@ -57,7 +56,7 @@ func sendMsg(i int){
 }
 
 // 检查用户合法性
-func checkUserStatus(i int) bool{
+func checkUserStatus(i int) bool {
 	if i < len(UserSlice) {
 		return UserSlice[i].Status
 	}
@@ -70,7 +69,7 @@ func handleConnection(i int) {
 	defer closeConn(i)
 
 	conn := UserSlice[i].Conn
-	
+
 	fmt.Println("RemoteAddr: ", conn.RemoteAddr().String())
 
 	go sendMsg(i)
@@ -94,7 +93,7 @@ func handleConnection(i int) {
 }
 
 // 关闭连接
-func closeConn(i int){
+func closeConn(i int) {
 	name := getNameById(i)
 	fmt.Printf("%v: close connect ... \n", name)
 	UserSlice[i].Conn.Close()
@@ -121,25 +120,25 @@ func dealMsg(msg string, i int) {
 		if err == nil && checkUserStatus(sendTo) {
 			if i == sendTo {
 				// 发送给自己
-				UserSlice[i].msgChan<- "send to yourself: " + msgSlice[1]
-			}else{
+				UserSlice[i].msgChan <- "send to yourself: " + msgSlice[1]
+			} else {
 				// 发送给其他用户
 				if len(UserSlice[sendTo].msgChan) >= LIMIT_MSG {
 					// 发送数目太多
-					conn.Write([]byte("大哥！你能不能别发了\n"))
-				}else{
-					UserSlice[sendTo].msgChan<- fmt.Sprintf("recive from %v : %v", name, msgSlice[1])
+					conn.Write([]byte("大哥!你能不能别发了\n"))
+				} else {
+					UserSlice[sendTo].msgChan <- fmt.Sprintf("recive from %v : %v", name, msgSlice[1])
 				}
 			}
-		}else if msgSlice[0] == "name" {
+		} else if msgSlice[0] == "name" {
 			// 修改名字
 			UserSlice[i].Name = strings.Trim(msgSlice[1], " \r\n")
-			UserSlice[i].msgChan<- "修改名字成功：" + UserSlice[i].Name
-		}else{
+			UserSlice[i].msgChan <- "修改名字成功: " + UserSlice[i].Name
+		} else {
 			// 发送给服务器
-			fmt.Printf("server recive from %v: %v \n",  name, msg)
+			fmt.Printf("server recive from %v: %v \n", name, msg)
 		}
-	}else{
+	} else {
 		// 发送给服务器
 		fmt.Printf("server recive from %v: %v \n", name, msg)
 	}

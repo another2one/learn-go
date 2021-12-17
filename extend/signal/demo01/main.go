@@ -25,8 +25,12 @@ func main() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 
-	// Block until a signal is received.
-	time.Sleep(time.Second * 5)
+	// 正确用法
+	go func() {
+		// Block until a signal is received.
+		time.Sleep(time.Second * 5)
+	}()
+
 	s := <-c
 	fmt.Println("Got signal:", s)
 }

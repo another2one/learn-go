@@ -32,7 +32,7 @@ func main() {
 					},
 				},
 			}
-			req, err := http.NewRequest("GET", urlStr, strings.NewReader(""))
+			req, err := http.NewRequest("GET", urlStr, strings.NewReader("name=lizhi&&age=27"))
 			if err != nil {
 				return err
 			}
