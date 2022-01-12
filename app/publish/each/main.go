@@ -43,6 +43,17 @@ type Article struct {
 func main() {
 	dsnes := [...]string{
 		"admin:lwm_1478963@tcp(193.8.83.217:3306)/rrzcms?charset=utf8mb4&parseTime=True&loc=Local",
+		"admin:lewaimai123@tcp(43.155.76.164:3306)/rrzcms?charset=utf8mb4&parseTime=True&loc=Local",
+		"admin:lewaimai123@tcp(43.130.117.95:3306)/rrzcms?charset=utf8mb4&parseTime=True&loc=Local",
+		"admin:lewaimai123@tcp(27.124.40.40:3306)/rrzcms?charset=utf8mb4&parseTime=True&loc=Local",
+		"admin:lewaimai123@tcp(154.38.228.74:3306)/rrzcms?charset=utf8mb4&parseTime=True&loc=Local",
+	}
+	nameMap := map[int]string{
+		0: "ys",
+		1: "qf_h",
+		2: "qf_a",
+		3: "90_h",
+		4: "90_a",
 	}
 	countDb := len(dsnes)
 	dbs = make([]*gorm.DB, countDb)
@@ -55,9 +66,9 @@ func main() {
 		initDb(dbs[i])
 	}
 
-	flag.StringVar(&path, "path", "D:/tmp_CsM7AM/tmp/default", ``)
-	flag.IntVar(&sleep, "sleep", 3, "inter time")
-	flag.IntVar(&limit, "limit", 3, "limit article pub num")
+	flag.StringVar(&path, "path", "./", ``) // D:/tmp_CsM7AM/tmp/default
+	flag.IntVar(&sleep, "sleep", 60, "inter time")
+	flag.IntVar(&limit, "limit", 100000, "limit article pub num")
 	flag.Parse()
 
 	c := make(chan os.Signal, 1)
@@ -96,7 +107,7 @@ func main() {
 			if res {
 				// 删除文件
 				deleteFile(fi.Name())
-				log.Printf("%s publish success \n\n", fi.Name())
+				log.Printf("%s publish %s success \n\n", nameMap[dbindex], fi.Name())
 				successNum++
 			}
 			// 是否需要休息几秒
@@ -126,6 +137,9 @@ func initDb(db *gorm.DB) {
 	var node string
 	db.Raw("select name from rrz_article_nodes where id = 25").Scan(&node)
 	if node != "外卖系统" {
+		// 删除就文章
+		db.Exec(`delete from rrz_articles where add_time < 1641288014;`)
+		// db.Exec(`update rrz_articles set IS_head = 1, is_recom = 1, is_special = 1 limit 6;`)
 		fmt.Println("init db ", db.Name())
 		db.Exec(`delete from rrz_site_menus where id > 0;`)
 		db.Exec(`delete from rrz_article_nodes where id > 24;`)
@@ -183,7 +197,7 @@ func pubArticle(articleName string, db *gorm.DB) bool {
 		article.Desc,
 		article.KeyWords,
 		nowInt,
-		1,
+		0,
 	)
 	return true
 }
@@ -213,7 +227,7 @@ func formatSlice(cs []string, col int, sep string) (str string) {
 		if len(v) < 2 {
 			continue
 		}
-		if temp != "" && i%col == 0 {
+		if temp != "" && col > 0 && i%col == 0 {
 			str += "<p>" + temp + "</p>"
 			temp = v + sep
 		} else {
