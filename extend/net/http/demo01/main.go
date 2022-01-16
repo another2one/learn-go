@@ -16,6 +16,7 @@ var (
 	host = "http://local.lewaimai.com"
 )
 
+// 测试加密签名
 func main() {
 	type articleExtend struct {
 		Last_mod  int      `json:"last_mod"`

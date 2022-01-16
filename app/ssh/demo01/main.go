@@ -60,22 +60,22 @@ func init() {
 			keyPath: "",
 			port:    22,
 		},
-		// "90_h": {
-		// 	Host:    "27.124.40.40",
-		// 	User:    "root",
-		// 	passwd:  "Lewaimai_123",
-		// 	Type:    "password",
-		// 	keyPath: "",
-		// 	port:    22,
-		// },
-		"90_a": {
-			Host:    "154.38.228.74",
+		"90_h": {
+			Host:    "27.124.40.40",
 			User:    "root",
 			passwd:  "Lewaimai_123",
 			Type:    "password",
 			keyPath: "",
 			port:    22,
 		},
+		// "90_a": {
+		// 	Host:    "154.38.228.74",
+		// 	User:    "root",
+		// 	passwd:  "Lewaimai_123",
+		// 	Type:    "password",
+		// 	keyPath: "",
+		// 	port:    22,
+		// },
 	}
 }
 
@@ -192,6 +192,18 @@ func main() {
 							doCmd(sInfo, name, `sed -i "s/{\$item.img}/{\$item.img|default='\/public\/template\/pc\/images\/default.gif'}/g" /home/wwwroot/default/renren/public/template/pc/cat.html`)
 							doCmd(sInfo, name, `sed -i "s/{\$item.img}/{\$item.img|default='\/public\/template\/pc\/images\/default.gif'}/g" /home/wwwroot/default/renren/public/template/pc/node.html`)
 							// sInfo.Session.Output(`sed -i "s/{\$item.img}/{\$item.img|default='\/public\/template\/pc\/images\/default.gif'}/g" /home/wwwroot/default/renren/public/template/pc/search.html`)
+						}
+
+					case "baidu":
+						bdMap := map[string]string{
+							"qf_a": "baidu_verify_code-F2i8BLSgMY.html",
+							"qf_h": "baidu_verify_code-BJKq9fD0h7.html",
+							"90_h": "baidu_verify_code-P3T2z8phzI.html",
+						}
+						if file, ok := bdMap[name]; ok {
+							UploadFile(sInfo, "D:/app/"+file, "/home/wwwroot/default/renren")
+						} else {
+							log.Println(name, " not found baidu stat file")
 						}
 
 					case "init": // 初始化
