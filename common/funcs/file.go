@@ -18,6 +18,7 @@ func PathExists(path string) (bool, error) {
 }
 
 // readFile 读取文件
+//  - path 文件路径
 func ReadFile(path string) string {
 	str, err := ioutil.ReadFile(path)
 	if err == nil {

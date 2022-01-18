@@ -184,7 +184,7 @@ func main() {
 						// 	log.Printf("%s 命令输出:\n %s \n", name, string(combo))
 						// }
 
-						if !funcs.In_array(name, []string{"qf_a", "qf_h"}) {
+						if !funcs.InArray(name, []string{"qf_a", "qf_h"}) {
 							// UploadFile(sInfo, "D:/default.gif", "/home/wwwroot/default/renren/public/template/pc/images")
 							// sInfo.Session.Output(`sed -i "s/{\$item.img}/{\$item.img|default='\/public\/template\/pc\/images\/default.gif'}/g" /home/wwwroot/default/renren/public/template/pc/index.html`)
 							// sInfo.Session.Output(`sed -i "s/{\$item.img}/{\$item.img|default='\/public\/template\/pc\/images\/default.gif'}/g" /home/wwwroot/default/renren/public/template/pc/node.html`)

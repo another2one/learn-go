@@ -7,14 +7,14 @@ import (
 
 type ArrayStack struct {
 	maxSize, head int
-	data          []interface{}
+	data          []int
 }
 
 func NewArrayStack(maxSize int) *ArrayStack {
 	return &ArrayStack{
 		maxSize: maxSize,
 		head:    -1,
-		data:    make([]interface{}, maxSize),
+		data:    make([]int, maxSize),
 	}
 }
 
