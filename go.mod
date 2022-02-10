@@ -3,6 +3,7 @@ module learn-go
 go 1.16
 
 require (
+	baliance.com/gooxml v1.0.1
 	github.com/PuerkitoBio/goquery v1.6.1
 	github.com/Shopify/sarama v1.28.0
 	github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef

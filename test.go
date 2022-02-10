@@ -1,21 +1,18 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"os"
-	"runtime"
-	"runtime/trace"
+	"strconv"
 )
 
 func main() {
-	trace.Start(os.Stderr)
-	defer trace.Stop()
-	num := 6
-	for index := 0; index < num; index++ {
-		resp, _ := http.Get("https://www.baidu.com")
-		_, _ = ioutil.ReadAll(resp.Body)
+	a := "66"
+	err := errors.New("666")
+	fmt.Println(err)
+	var s int
+	if s, err = strconv.Atoi(a); err == nil {
+		fmt.Println(s, err)
 	}
-	fmt.Printf("此时goroutine个数= %d\n", runtime.NumGoroutine())
+	fmt.Println(err)
 }

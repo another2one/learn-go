@@ -13,7 +13,7 @@ func main() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 
-	tmpDir := `C:/Users/Administrator/AppData/Local/Temp/`
+	tmpDir := `C:/Users/lizhi/AppData/Local/Temp/`
 	parttern := `^(phpcs|staticcheck|go-build).*`
 	reg := regexp.MustCompile(parttern)
 
@@ -26,7 +26,7 @@ func main() {
 	for _, v := range files {
 		if reg.MatchString(v.Name()) {
 			if err := os.RemoveAll(tmpDir + v.Name()); err != nil {
-				log.Fatalf("del dir %s error: %s \n", v.Name(), err)
+				log.Printf("del dir %s error: %s \n", v.Name(), err)
 			} else {
 				fmt.Println("delete ", v.Name())
 			}
