@@ -39,6 +39,7 @@ func main() {
 
 	viper.Unmarshal(&config) //将配置文件绑定到config上
 	fmt.Printf("config: %+v, redis: %v \n", config, config.Redis)
+	fmt.Printf("all data: %+v \n", viper.AllSettings())
 
 	// 读取值
 	portsSlice := viper.GetIntSlice("mysql.ports")
