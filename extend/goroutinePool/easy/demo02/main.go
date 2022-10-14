@@ -59,7 +59,6 @@ func (p *Pool) SetMaxWaitSecond(senconds int64) {
 
 // 开启协程池处理任务
 func (p *Pool) run(workNum int) {
-	atomic.AddUint64(&p.totalWorkers, 1)
 	defer p.decrTotalNum()
 	defer fmt.Printf("%d 号协程销毁 \n", workNum)
 	defer func() {
@@ -68,20 +67,27 @@ func (p *Pool) run(workNum int) {
 			p.decrRunningNum()
 		}
 	}()
-	for {
-		select {
-		case w, ok := <-p.chTask:
-			if !ok {
-				return
-			}
-			atomic.AddUint64(&p.runningWorkers, 1)
-			w.Handler(w.Params...)
-			log.Printf("%d 号协程执行完毕 \n", workNum)
-			p.decrRunningNum()
-		case <-time.After(time.Duration(p.maxWaitSecond) * time.Second):
-			// 销毁
-			return
-		}
+	// for {
+	// 	select {
+	// 	case w, ok := <-p.chTask:
+	// 		if !ok {
+	// 			return
+	// 		}
+	// 		atomic.AddUint64(&p.runningWorkers, 1)
+	// 		w.Handler(w.Params...)
+	// 		log.Printf("%d 号协程执行完毕 \n", workNum)
+	// 		p.decrRunningNum()
+	// 	case <-time.After(time.Duration(p.maxWaitSecond) * time.Second):
+	// 		// 销毁
+	// 		return
+	// 	}
+	// }
+	// fmt.Println(" -- run 协程数量", atomic.LoadUint64(&p.totalWorkers))
+	for w := range p.chTask {
+		atomic.AddUint64(&p.runningWorkers, 1)
+		w.Handler(w.Params...)
+		log.Printf("%d 号协程执行完毕 \n", workNum)
+		p.decrRunningNum()
 	}
 }
 
@@ -102,10 +108,13 @@ func (p *Pool) Put(t *Task) {
 		return
 	}
 	// 检查没有超过容量以及没有空闲协程的话就新建
-	if atomic.LoadUint64(&p.totalWorkers) < p.capacity && atomic.LoadUint64(&p.totalWorkers) <= atomic.LoadUint64(&p.runningWorkers) {
+	p.Mutex.Lock()
+	if p.totalWorkers < p.capacity && p.totalWorkers <= p.runningWorkers {
 		go p.run(workNum)
 		workNum++
+		p.totalWorkers++ // 这个必须在这里面操作 在p.run里面会多出几个 go 协程里面代码执行时间是不定的
 	}
+	p.Mutex.Unlock()
 	p.chTask <- t
 }
 
@@ -117,13 +126,8 @@ func (p *Pool) Close() {
 	for atomic.LoadUint64(&p.runningWorkers) > 0 {
 		time.Sleep(time.Millisecond * 1)
 	}
-	// 等待所有协程关闭
-	// for atomic.LoadUint64(&p.totalWorkers) > 0 {
-	// 	fmt.Println(" -- 协程数量", atomic.LoadUint64(&p.totalWorkers))
-	// 	time.Sleep(time.Millisecond * 1000)
-	// }
-	fmt.Println("全部执行完成了")
-	// 执行完成
+
+	// 执行完成关闭通道
 	close(p.chTask)
 }
 
@@ -143,10 +147,11 @@ func main() {
 				if v[0] == 3 {
 					panic("not like 3")
 				}
-				fmt.Printf("%d 号任务执行完成 。。。 \n", v[0])
+				log.Printf("%d 号任务执行完成 。。。 \n", v[0])
 			}
 			return nil
 		}, []interface{}{i})
 		p.Put(t)
 	}
+	fmt.Println(66)
 }

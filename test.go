@@ -1,18 +1,30 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"strconv"
+	"sync"
 )
 
+var wg sync.WaitGroup
+
 func main() {
-	a := "66"
-	err := errors.New("666")
-	fmt.Println(err)
-	var s int
-	if s, err = strconv.Atoi(a); err == nil {
-		fmt.Println(s, err)
-	}
-	fmt.Println(err)
+	wg.Add(2)
+	ch := make(chan int)
+	go func() {
+		for i := 1; i < 27; i++ {
+			ch <- 1
+			fmt.Println(i)
+			ch <- 1
+		}
+		wg.Done()
+	}()
+	go func() {
+		for i := 'A'; i <= 'Z'; i++ {
+			<-ch
+			fmt.Printf("%c \n", i)
+			<-ch
+		}
+		wg.Done()
+	}()
+	wg.Wait()
 }
