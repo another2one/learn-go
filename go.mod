@@ -21,7 +21,6 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/gorilla/mux v1.8.0
 	github.com/hajimehoshi/ebiten/v2 v2.4.14
-	github.com/hajimehoshi/oto v0.6.1
 	github.com/hpcloud/tail v1.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/panjf2000/ants/v2 v2.5.0
@@ -29,12 +28,11 @@ require (
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
-	github.com/tosone/minimp3 v1.0.1
 	github.com/xuri/excelize/v2 v2.5.0
 	go.uber.org/zap v1.17.0
-	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
+	golang.org/x/crypto v0.1.0
 	golang.org/x/image v0.2.0
-	golang.org/x/net v0.0.0-20220722155237-a158d28d115b
+	golang.org/x/net v0.1.0
 	golang.org/x/sync v0.0.0-20220819030929-7fc1605a5dde
 	google.golang.org/grpc v1.38.0
 	gorm.io/driver/mysql v1.1.1
