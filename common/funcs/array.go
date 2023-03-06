@@ -79,6 +79,22 @@ func ArrayColumnMap[T IntUintFloatString](s1 []map[string]T, column_key, index_k
 	return
 }
 
+// ArrayUnique 数组去重
+func ArrayUnique[T IntUintFloatString](s1 []T) []T {
+	if len(s1) <= 1 {
+		return s1
+	}
+	s2 := make([]T, 0)
+	m2 := make(map[T]struct{}, len(s1))
+	for _, v := range s1 {
+		if _, ok := m2[v]; !ok {
+			m2[v] = struct{}{}
+			s2 = append(s2, v)
+		}
+	}
+	return s2
+}
+
 // 数组差集
 func ArrayDiff[T comparable](s1 []T, s2 []T) (s []T) {
 	m1 := make(map[T]bool, len(s1))

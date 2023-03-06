@@ -21,6 +21,7 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/gorilla/mux v1.8.0
 	github.com/hajimehoshi/ebiten/v2 v2.4.14
+	github.com/hajimehoshi/oto v0.6.1
 	github.com/hpcloud/tail v1.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/panjf2000/ants/v2 v2.5.0
@@ -28,6 +29,7 @@ require (
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
+	github.com/tosone/minimp3 v1.0.1
 	github.com/xuri/excelize/v2 v2.5.0
 	go.uber.org/zap v1.17.0
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
@@ -113,6 +115,7 @@ require (
 	github.com/yuin/goldmark v1.4.13 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
+	golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6 // indirect
 	golang.org/x/mobile v0.0.0-20221110043201-43a038452099 // indirect
 	golang.org/x/sys v0.3.0 // indirect
 	golang.org/x/text v0.5.0 // indirect
