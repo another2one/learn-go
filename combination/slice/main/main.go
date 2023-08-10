@@ -8,11 +8,14 @@ import (
 // 本质就是 结构体 struct{len cap *arr} 当容量不够时， 会创建一个新数组并指向他
 func delete(s []int, index int) []int {
 	length := len(s)
+	if index < 0 {
+		index = length + index
+	}
 	if index == 0 {
 		return s[1:length]
-	} else if index == length {
+	} else if index == length-1 {
 		return s[0 : length-1]
-	} else if index > 0 && index < length {
+	} else if index > 0 && index < length-1 {
 		return append(s[0:index-1], s[index+1:length]...)
 	} else {
 		panic("index out of range")

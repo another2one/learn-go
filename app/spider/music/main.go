@@ -27,7 +27,8 @@ func main() {
 	}
 
 	// 匹配歌曲链接
-	reg := regexp.MustCompile(`href=\"\/(music\/\w+)\"`)
+	// reg := regexp.MustCompile(`href=\"\/(music\/\w+)\"`)
+	reg := regexp.MustCompil
 	urlRes := reg.FindAllSubmatch(body, -1)
 	lens := len(urlRes)
 	if lens == 0 {
