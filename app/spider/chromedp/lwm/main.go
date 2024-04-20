@@ -4,41 +4,39 @@ package main
 
 import (
 	"context"
-	"io/ioutil"
-	"learn-go/combination/slice/demo02"
-	"log"
-	"math"
-	"net/http"
-	"os"
-	"strings"
-
 	"github.com/PuerkitoBio/goquery"
 	"github.com/chromedp/cdproto/dom"
 	"github.com/chromedp/cdproto/emulation"
 	"github.com/chromedp/cdproto/page"
 	"github.com/chromedp/chromedp"
 	"github.com/chromedp/chromedp/device"
+	"learn-go/combination/slice/demo02"
+	"log"
+	"math"
+	"net/http"
+	"os"
+	"strings"
 )
 
 var (
-	height float64
-	width  float64
-	domian = `https://www.lewaimai.com`
+	height  float64
+	width   float64
+	picPath = "D:/app/go/learn/app/spider/chromedp/lwm/pic/"
+	domian  = `https://www.lewaimai.com`
 )
 
 const (
-	URL_TYPE_PC     = 1
-	URL_TYPE_MOBILE = 2
+	UrlTypePc     = 1
+	UrlTypeMobile = 2
 )
 
 func main() {
-
 	// 清空pic文件夹
-	err := os.RemoveAll("pic")
+	err := os.RemoveAll(picPath)
 	if err != nil {
 		log.Fatalln("clean pic dir error: ", err)
 	}
-	err = os.Mkdir("pic", 0666)
+	err = os.Mkdir(picPath, 0666)
 	if err != nil {
 		log.Fatalln("create pic dir error: ", err)
 	}
@@ -52,11 +50,11 @@ func main() {
 	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
 	defer cancel()
 	// create chrome instance
-	ctx, cancel := chromedp.NewContext(
+	ctx, cancel1 := chromedp.NewContext(
 		allocCtx,
 		chromedp.WithLogf(log.Printf),
 	)
-	defer cancel()
+	defer cancel1()
 
 	urls := []string{domian}
 
@@ -83,12 +81,11 @@ func main() {
 
 	// 去重 TODO: 为啥重复访问会卡住
 	urls = demo02.StringSliceToSet(urls)
-
 	// 循环截图
 	for _, url := range urls {
 		log.Println(url, "......")
 		// capture entire browser viewport
-		if err := chromedp.Run(ctx, fullScreenshot(url, 90)); err != nil {
+		if err := chromedp.Run(ctx, fullScreenshot(url, 100)); err != nil {
 			log.Println(err)
 		}
 	}
@@ -111,8 +108,8 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 		chromedp.WaitVisible(`.footer-left`, chromedp.ByQuery),
 
 		// 获取网页高度
-		chromedp.Evaluate(`$(document).height()`, &height),
-		chromedp.Evaluate(`$(document).width()`, &width),
+		chromedp.Evaluate(`document.body.clientHeight`, &height),
+		chromedp.Evaluate(`document.body.clientWidth`, &width),
 
 		// 获取截图信息
 		chromedp.ActionFunc(func(ctx context.Context) error {
@@ -163,8 +160,8 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 			if err != nil {
 				log.Printf("%s 获取截图错误：%s \n", url, err)
 			} else {
-				fileName := getNameByUrl(url, URL_TYPE_PC)
-				if err := ioutil.WriteFile(fileName, fileInfo, 0o644); err != nil {
+				fileName := getNameByUrl(url, UrlTypePc)
+				if err := os.WriteFile(fileName, fileInfo, 0o644); err != nil {
 					log.Printf("%s 写入截图错误：%s \n", url, err)
 				}
 			}
@@ -180,8 +177,8 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 		chromedp.WaitVisible(`.about__us_ul`, chromedp.ByQuery),
 
 		// 获取网页高度
-		chromedp.Evaluate(`$(document).height()`, &height),
-		chromedp.Evaluate(`$(document).width()`, &width),
+		chromedp.Evaluate(`document.body.clientHeight`, &height),
+		chromedp.Evaluate(`document.body.clientWidth`, &width),
 
 		// 获取截图信息
 		chromedp.ActionFunc(func(ctx context.Context) error {
@@ -230,8 +227,8 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 			if err != nil {
 				log.Printf("%s 获取截图错误：%s \n", url, err)
 			} else {
-				fileName := getNameByUrl(url, URL_TYPE_MOBILE)
-				if err := ioutil.WriteFile(fileName, fileInfo, 0o644); err != nil {
+				fileName := getNameByUrl(url, UrlTypeMobile)
+				if err := os.WriteFile(fileName, fileInfo, 0o644); err != nil {
 					log.Printf("%s 写入截图错误：%s \n", url, err)
 				}
 			}
@@ -242,13 +239,15 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 
 func getNameByUrl(url string, urlType int8) string {
 	var fileSuffix = "_pc.jpg"
-	if urlType == URL_TYPE_MOBILE {
+	if urlType == UrlTypeMobile {
 		fileSuffix = "_m.jpg"
 	}
 	if url == domian {
-		return "pic/index" + fileSuffix
+		// 首页图片单独文件夹
+		return picPath + "index" + fileSuffix
 	}
 	fileName := strings.Replace(url, domian+"/", "", 1)
 	fileName = strings.Replace(fileName, ".html", "", 1)
-	return "pic/" + fileName + fileSuffix
+	fileName = strings.ReplaceAll(fileName, "/", "_")
+	return picPath + fileName + fileSuffix
 }

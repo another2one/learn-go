@@ -88,7 +88,7 @@ loop:
 			_ = c1.Run()
 			_ = c2.Wait()
 			file.Flush()
-			fmt.Printf("%v \n", bufBytes)
+			fmt.Printf("%s \n", bufBytes)
 			f()
 			time.Sleep(intervalTime)
 		}
