@@ -3,6 +3,7 @@ package main
 import "learn-go/designPattern/adapter/utils"
 
 // 规范化接口：给出一套统一标准规范，所有实现和使用按规范来用
+// sdk或者底层实现很有用，比如缓存即使 set get del
 // 接口
 func main() {
 	media := new(utils.MediaPlayer)
