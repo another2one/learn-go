@@ -13,7 +13,7 @@ require (
 	github.com/chromedp/chromedp v0.6.8
 	github.com/codegangsta/negroni v1.0.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/duke-git/lancet/v2 v2.0.8
+	github.com/duke-git/lancet/v2 v2.1.10
 	github.com/garyburd/redigo v1.6.2
 	github.com/go-playground/validator/v10 v10.6.1
 	github.com/go-sql-driver/mysql v1.6.0
