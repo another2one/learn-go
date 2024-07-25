@@ -131,7 +131,7 @@ func (p *Pool) Close() {
 	close(p.chTask)
 }
 
-//主函数
+// 主函数
 func main() {
 	timeStart := time.Now()
 	defer func() {

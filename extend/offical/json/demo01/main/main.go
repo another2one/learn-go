@@ -3,7 +3,7 @@ package main
 
 import (
 	"fmt"
-	"learn-go/extend/detail/json/demo01/github"
+	"learn-go/extend/offical/json/demo01/github"
 	"log"
 	"os"
 	"text/template"

@@ -11,7 +11,7 @@ type Task struct {
 	f func() error //一个无参的函数类型
 }
 
-//通过NewTask来创建一个Task
+// 通过NewTask来创建一个Task
 func NewTask(f func() error) *Task {
 	t := Task{
 		f: f,
@@ -20,7 +20,7 @@ func NewTask(f func() error) *Task {
 	return &t
 }
 
-//执行Task任务的方法
+// 执行Task任务的方法
 func (t *Task) Execute() {
 	t.f() //调用任务所绑定的函数
 }
@@ -38,7 +38,7 @@ type Pool struct {
 	JobsChannel chan *Task
 }
 
-//创建一个协程池
+// 创建一个协程池
 func NewPool(cap int) *Pool {
 	p := Pool{
 		EntryChannel: make(chan *Task),
@@ -49,7 +49,7 @@ func NewPool(cap int) *Pool {
 	return &p
 }
 
-//协程池创建一个worker并且开始工作
+// 协程池创建一个worker并且开始工作
 func (p *Pool) worker(work_ID int) {
 	//worker不断的从JobsChannel内部任务队列中拿任务
 	for task := range p.JobsChannel {
@@ -59,7 +59,7 @@ func (p *Pool) worker(work_ID int) {
 	}
 }
 
-//让协程池Pool开始工作
+// 让协程池Pool开始工作
 func (p *Pool) Run() {
 	//1,首先根据协程池的worker数量限定,开启固定数量的Worker,
 	//  每一个Worker用一个Goroutine承载
@@ -80,7 +80,7 @@ func (p *Pool) Run() {
 	close(p.EntryChannel)
 }
 
-//主函数
+// 主函数
 func main() {
 	//创建一个Task
 	t := NewTask(func() error {

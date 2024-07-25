@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"learn-go/extend/detail/pak/b"
-	"learn-go/extend/detail/pak/c"
+	"learn-go/extend/offical/pack/b"
+	"learn-go/extend/offical/pack/c"
 )
 
 var a = 1

@@ -3,25 +3,24 @@ package main
 import (
 	"context"
 	"log"
-	"sync"
 	"time"
 )
-
-var wg sync.WaitGroup
 
 func do(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
-			log.Println("cancel receive")
+			log.Println(ctx.Err())
 			return
 		default:
-			time.Sleep(time.Millisecond)
+			log.Println("sleep")
+			time.Sleep(200 * time.Millisecond)
 		}
 	}
 }
 
 func main() {
+	log.SetFlags(log.Lmicroseconds)
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
 		time.Sleep(2 * time.Second)

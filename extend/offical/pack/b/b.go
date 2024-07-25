@@ -2,7 +2,7 @@ package b
 
 import (
 	"fmt"
-	"learn-go/extend/detail/pak/c"
+	"learn-go/extend/offical/pack/c"
 )
 
 var A = func() string {
