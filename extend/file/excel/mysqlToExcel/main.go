@@ -4,10 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/xuri/excelize/v2"
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	model2 "learn-go/extend/file/excel/demo02/model"
+	"learn-go/common/funcs"
+	model2 "learn-go/extend/file/excel/mysqlToExcel/model"
 	"log"
 	"math"
 	"os"
@@ -30,7 +30,7 @@ func main() {
 	writer := bufio.NewWriter(file)
 	defer writer.Flush()
 	newLogger := logger.New(
-		log.New(writer, "\r\n", log.LstdFlags), // io writer
+		log.New(writer, "\r\n", log.Ldate), // io writer
 		logger.Config{
 			SlowThreshold: time.Second, // 慢 SQL 阈值
 			LogLevel:      logger.Info, // Log level
@@ -38,20 +38,15 @@ func main() {
 		},
 	)
 
-	connectStr := "liantongxue:LewaimaiBeta2019@tcp(rm-bp12vwzku0jy9p865ko.mysql.rds.aliyuncs.com:3306)/weixin?charset=utf8&parseTime=True&loc=Local"
-	db, err = gorm.Open(mysql.Open(connectStr), &gorm.Config{Logger: newLogger})
-	if err != nil {
-		fmt.Println("connect db err: ", err)
-	}
+	db := funcs.MustGetDb(newLogger)
 
 	// 遍历
-
 	pageSize := 2000
 	page := 0
 	for {
 		results := []map[string]interface{}{}
 		db.Model(&model2.LewaimaiOrderHistory{}).Offset(page * pageSize).Limit(pageSize).Find(&results)
-		err := writeExcel(results, "lwm_order"+strconv.Itoa(page+1)+".xlsx")
+		err := writeExcel(results, funcs.ProjectPath+"extend/file/excel/mysqlToExcel/lwm_order"+strconv.Itoa(page+1)+".xlsx")
 		if err != nil {
 			fmt.Println("写入excel出错：", err)
 			break

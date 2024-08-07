@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -46,5 +45,5 @@ func main() {
 	for i := 0; i < 5; i++ {
 		str += "hello Dog\r\n"
 	}
-	ioutil.WriteFile(dir, []byte(str), 0666)
+	os.WriteFile(dir, []byte(str), 0666)
 }
