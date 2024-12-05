@@ -30,9 +30,9 @@ require (
 	github.com/spf13/viper v1.8.1
 	github.com/xuri/excelize/v2 v2.5.0
 	go.uber.org/zap v1.17.0
-	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
+	golang.org/x/crypto v0.1.0
 	golang.org/x/image v0.2.0
-	golang.org/x/net v0.0.0-20220722155237-a158d28d115b
+	golang.org/x/net v0.1.0
 	golang.org/x/sync v0.0.0-20220819030929-7fc1605a5dde
 	google.golang.org/grpc v1.38.0
 	gorm.io/driver/mysql v1.1.1
