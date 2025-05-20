@@ -11,6 +11,7 @@ import (
 	"github.com/chromedp/chromedp"
 	"github.com/chromedp/chromedp/device"
 	"learn-go/combination/slice/demo02"
+	"learn-go/common/funcs"
 	"log"
 	"math"
 	"net/http"
@@ -21,7 +22,7 @@ import (
 var (
 	height  float64
 	width   float64
-	picPath = "D:/app/go/learn/app/spider/chromedp/lwm/pic/"
+	picPath = funcs.ProjectPath + "app/spider/chromedp/lwm/pic/"
 	domian  = `https://www.lewaimai.com`
 )
 
@@ -36,7 +37,7 @@ func main() {
 	if err != nil {
 		log.Fatalln("clean pic dir error: ", err)
 	}
-	err = os.Mkdir(picPath, 0666)
+	err = os.MkdirAll(picPath, 0766)
 	if err != nil {
 		log.Fatalln("create pic dir error: ", err)
 	}
@@ -115,7 +116,7 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 		chromedp.ActionFunc(func(ctx context.Context) error {
 
 			// get layout metrics
-			_, _, contentSize, err := page.GetLayoutMetrics().Do(ctx)
+			_, _, contentSize, _, _, _, err := page.GetLayoutMetrics().Do(ctx)
 			if err != nil {
 				return err
 			}
@@ -184,7 +185,7 @@ func fullScreenshot(url string, quality int64) chromedp.Tasks {
 		chromedp.ActionFunc(func(ctx context.Context) error {
 
 			// get layout metrics
-			_, _, contentSize, err := page.GetLayoutMetrics().Do(ctx)
+			_, _, contentSize, _, _, _, err := page.GetLayoutMetrics().Do(ctx)
 			if err != nil {
 				return err
 			}

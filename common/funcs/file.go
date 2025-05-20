@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-const ProjectPath = "D:/app/go/learn/"
+const ProjectPath = "/Users/lizhi/Desktop/app/go/learn-go/"
 
 // PathExists 判断文件夹是否存在
 func PathExists(path string) (bool, error) {
