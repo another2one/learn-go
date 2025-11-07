@@ -68,6 +68,38 @@ func (c *Context) JSON(code int, h H) {
 	c.Data(code, msg)
 }
 
+func (c *Context) Ok(h H) {
+	c.JSON(http.StatusOK, H{
+		"code": 200,
+		"msg":  "操作成功",
+		"data": h,
+	})
+}
+
+func (c *Context) Error(code int, msg string) {
+	c.JSON(http.StatusOK, H{
+		"code": code,
+		"msg":  msg,
+		"data": map[string]interface{}{},
+	})
+}
+
+func (c *Context) ErrorWithData(code int, msg string, h H) {
+	c.JSON(http.StatusOK, H{
+		"code": code,
+		"msg":  msg,
+		"data": h,
+	})
+}
+
+func (c *Context) OkWithMsg(h H, msg string) {
+	c.JSON(http.StatusOK, H{
+		"code": 200,
+		"msg":  msg,
+		"data": h,
+	})
+}
+
 func (c *Context) Query(name string) string {
 	return c.Req.URL.Query().Get(name)
 }

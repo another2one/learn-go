@@ -1,9 +1,9 @@
 package model
 
 import (
+	"github.com/gomodule/redigo/redis"
 	"learn-go/app/chat/conf"
 	"learn-go/app/chat/utils"
-	"github.com/garyburd/redigo/redis"
 	"strconv"
 )
 

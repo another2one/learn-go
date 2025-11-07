@@ -3,7 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
+	"learn-go/common/funcs"
 	"log"
 	"net/http"
 	"os"
@@ -13,22 +14,40 @@ import (
 )
 
 var (
-	searchUrl   = "https://www.gequbao.com/s/%E5%91%A8%E6%9D%B0%E4%BC%A6-"
-	host        = "https://www.gequbao.com/"
-	ErrorFileOp = errors.New("op file error")
-	ErrorUrlGet = errors.New("url get error")
+	searchUrl    = "https://www.gequbao.com/s/"
+	host         = "https://www.gequbao.com/"
+	keyWord      string
+	ErrorFileOp  = errors.New("op file error")
+	ErrorUrlGet  = errors.New("url get error")
+	downLoadPath = funcs.ProjectPath + "runtime/download/"
 )
 
 func main() {
+	var body []byte
+	var err error
+	//fmt.Println("https://www.gequbao.com/ 歌曲爬虫，请输入关键字")
+	//for {
+	//	fmt.Scanln(&keyWord)
+	//	if len(keyWord) == 0 {
+	//		fmt.Printf("输入有误 %s \n", keyWord)
+	//		continue
+	//	}
+	//	//获取搜索结果
+	//	body, err = get(searchUrl + keyWord)
+	//	if err != nil {
+	//		fmt.Printf("search error: %s \n", err)
+	//		continue
+	//	}
+	//	break
+	//}
 	//获取搜索结果
-	body, err := get(searchUrl)
+	keyWord = "孙燕姿"
+	body, err = get(searchUrl + keyWord)
 	if err != nil {
-		log.Fatalln("search error: ", err)
+		log.Fatalf("search error: %s \n", err)
 	}
-
 	// 匹配歌曲链接
-	// reg := regexp.MustCompile(`href=\"\/(music\/\w+)\"`)
-	reg := regexp.MustCompil
+	reg := regexp.MustCompile(`href=\"\/(music\/\w+)\"`)
 	urlRes := reg.FindAllSubmatch(body, -1)
 	lens := len(urlRes)
 	if lens == 0 {
@@ -43,21 +62,31 @@ func main() {
 			urls = append(urls, url)
 		}
 	}
-	fmt.Printf("%q", urls)
+	fmt.Printf("%q \n", urls)
+
 	// 详情页
-	for k, v1 := range urls {
-		if len(v1) > 0 && k > 70 {
-			detailPage(host + v1)
-			// 休眠一会
-			time.Sleep(time.Millisecond * 1000)
+	for _, v1 := range urls {
+		if len(v1) > 0 {
+			id, ok := strings.CutPrefix(v1, "music/")
+			if !ok {
+				fmt.Errorf("url error %s \n", v1)
+				continue
+			}
+			fmt.Printf("%v \n", id)
+			detailPage(host+v1, id)
+			break
+			// 休眠一会 防止被检测出来爬虫
+			time.Sleep(time.Millisecond * 1500)
 		}
 	}
 }
 
-func detailPage(url string) {
+// detailPage 下载歌曲
+// id 歌曲在爬虫网站的id 用于防止重复下载
+func detailPage(url string, id string) {
 	defer func() {
 		if err := recover(); err != nil {
-			//fmt.Println(err)
+			fmt.Println(err)
 		}
 	}()
 
@@ -70,7 +99,7 @@ func detailPage(url string) {
 	reg1 := regexp.MustCompile(`(https\:\/\/apis\.jxcxin\.cn.*?)\'`)
 	urlRes1 := reg1.FindSubmatch(mBody)
 	if len(urlRes1) == 0 {
-		if err = ioutil.WriteFile("fail.html", mBody, 0666); err != nil {
+		if err = os.WriteFile("fail.html", mBody, 0666); err != nil {
 			panic(fmt.Errorf("write file error: %s [%s]", "fail.html", err))
 		}
 		panic("music url error")
@@ -82,7 +111,7 @@ func detailPage(url string) {
 	reg3 := regexp.MustCompile(`type=(.*)`)
 	urlRes3 := reg3.FindSubmatch([]byte(dUrl))
 	if len(urlRes3) == 0 {
-		if err = ioutil.WriteFile("fail.html", mBody, 0666); err != nil {
+		if err = os.WriteFile("fail.html", mBody, 0666); err != nil {
 			panic(fmt.Errorf("write file error: %s [%s]", "fail.html", err))
 		}
 		panic("music type error")
@@ -93,15 +122,15 @@ func detailPage(url string) {
 	reg2 := regexp.MustCompile(`<title>(.*?)-`)
 	urlRes2 := reg2.FindSubmatch(mBody)
 	if len(urlRes2) == 0 {
-		if err = ioutil.WriteFile("fail.html", mBody, 0666); err != nil {
+		if err = os.WriteFile("fail.html", mBody, 0666); err != nil {
 			panic(fmt.Errorf("write file error: %s [%s]", "fail.html", err))
 		}
 		panic("music name error")
 	}
 	musicName := string(urlRes2[1])
 
-	// 保存路径
-	filePath := fmt.Sprintf("download/%s-周杰伦.%s", musicName, musicType)
+	// 保存路径 歌曲名加字符防止网易云盘判断为vip歌曲
+	filePath := fmt.Sprintf(downLoadPath+"%s-%s.%s", musicName, id, musicType)
 	fmt.Printf("music path %q \n", filePath)
 	_, err = os.Stat(filePath)
 	if err == nil {
@@ -114,12 +143,13 @@ func detailPage(url string) {
 	if err != nil {
 		panic(fmt.Errorf("download error: %s [%s]", dUrl, err))
 	}
-	if err = ioutil.WriteFile(filePath, mp3Body, 0666); err != nil {
+	if err = os.WriteFile(filePath, mp3Body, 0666); err != nil {
 		panic(fmt.Errorf("write file error: %s [%s]", filePath, err))
 	}
 	return
 }
 
+// get 获取 url 网页内容
 func get(url string) ([]byte, error) {
 	client := http.Client{}
 	defer client.CloseIdleConnections()
@@ -131,7 +161,7 @@ func get(url string) ([]byte, error) {
 	}
 	defer rsp.Body.Close()
 
-	return ioutil.ReadAll(rsp.Body)
+	return io.ReadAll(rsp.Body)
 }
 
 func _log(params any) {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"learn-go/common/funcs"
 	"log"
 
 	"baliance.com/gooxml/document"
@@ -10,7 +11,12 @@ import (
 // 使用示例 C:\Users\lizhi\go\pkg\mod\baliance.com\gooxml@v1.0.1\_examples
 // 主要是编辑word 读取非文字的时候会有点问题
 func main() {
-	doc, err := document.Open("./乐外卖网站优化.docx")
+	test()
+}
+
+func test() {
+	// /Users/lizhi/Desktop/app/go/learn-go/extend/file/word/goxml/test.docx
+	doc, err := document.Open(funcs.ProjectPath + "extend/file/word/goxml/test.docx")
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}
@@ -22,6 +28,5 @@ func main() {
 			fmt.Print("\t-----------第", j, "格式片段-------------")
 			fmt.Printf("%v \n", run.Text())
 		}
-
 	}
 }

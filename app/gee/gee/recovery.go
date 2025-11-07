@@ -17,6 +17,9 @@ func trace(message string) string {
 	for _, pc := range pcs[:n] {
 		fn := runtime.FuncForPC(pc)
 		file, line := fn.FileLine(pc)
+		if !strings.Contains(file, "gee") {
+			continue
+		}
 		str.WriteString(fmt.Sprintf("\n\t%s:%d", file, line))
 	}
 	return str.String()

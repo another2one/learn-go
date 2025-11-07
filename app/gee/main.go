@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"learn-go/common/funcs"
 	"log"
 	"net/http"
 	"time"
@@ -14,6 +15,10 @@ type student struct {
 	Name string
 	Age  int8
 }
+
+var (
+	RootPath = funcs.ProjectPath + "app/gee/"
+)
 
 func FormatAsDate(t time.Time) string {
 	year, month, day := t.Date()
@@ -49,14 +54,16 @@ func main() {
 	r.SetFuncMap(template.FuncMap{
 		"FormatAsDate": FormatAsDate,
 	})
-	r.LoadHTMLGlob("view/*")
-	r.Static("/assets", "./static")
+	r.LoadHTMLGlob(RootPath + "view/*")
+	r.Static("/assets", RootPath+"static")
 
 	stu1 := &student{Name: "Geektutu", Age: 20}
 	stu2 := &student{Name: "Jack", Age: 22}
+
 	r.GET("/", func(c *gee.Context) {
 		c.HTML(http.StatusOK, "css.tmpl", nil)
 	})
+
 	r.GET("/students", func(c *gee.Context) {
 		c.HTML(http.StatusOK, "arr.tmpl", gee.H{
 			"title":  "gee",
@@ -75,11 +82,18 @@ func main() {
 	})
 
 	r.GET("/date", func(c *gee.Context) {
-		c.HTML(http.StatusOK, "custom_func.tmpl", gee.H{
-			"title": "gee",
-			"now":   time.Date(2019, 8, 17, 0, 0, 0, 0, time.UTC),
+		c.ErrorWithData(500, "error", gee.H{
+			"title":     "gee",
+			"now":       time.Now().Format(funcs.DateTimeFormat),
+			"now_mill":  time.Now().Format(funcs.DateTimeWithMillSecondFormat),
+			"now_micro": time.Now().Format(funcs.DateTimeWithMicroSecondFormat),
 		})
 	})
 
+	r.GET("/error", func(c *gee.Context) {
+		c.Error(500, "error")
+	})
+
+	fmt.Println("start at http://127.0.0.1:9999")
 	r.Run(":9999")
 }

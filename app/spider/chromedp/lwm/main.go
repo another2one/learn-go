@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 var (
@@ -27,8 +28,9 @@ var (
 )
 
 const (
-	UrlTypePc     = 1
-	UrlTypeMobile = 2
+	UrlTypePc          = 1
+	UrlTypeMobile      = 2
+	MinOperatorSeconds = 3 // 每次操作至少间隔时间，防止触发限流
 )
 
 func main() {
@@ -85,9 +87,14 @@ func main() {
 	// 循环截图
 	for _, url := range urls {
 		log.Println(url, "......")
+		start := time.Now()
 		// capture entire browser viewport
 		if err := chromedp.Run(ctx, fullScreenshot(url, 100)); err != nil {
 			log.Println(err)
+		}
+		diffMill := MinOperatorSeconds*1000 - time.Now().Sub(start).Milliseconds()
+		if diffMill > 0 {
+			time.Sleep(time.Duration(diffMill) * time.Millisecond)
 		}
 	}
 }

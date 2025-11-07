@@ -300,7 +300,7 @@ func publicKeyAuthFunc(kPath string) ssh.AuthMethod {
 	return ssh.PublicKeys(signer)
 }
 
-//获取ftp连接
+// 获取ftp连接
 func getftpclient(client *ssh.Client) *sftp.Client {
 	ftpclient, err := sftp.NewClient(client)
 	if err != nil {
@@ -310,7 +310,7 @@ func getftpclient(client *ssh.Client) *sftp.Client {
 	return ftpclient
 }
 
-//上传文件
+// 上传文件
 func UploadFile(sInfo *sshInfo, localpath, remotepath string) {
 	ftpclient := getftpclient(sInfo.Client)
 	defer ftpclient.Close()
@@ -367,7 +367,7 @@ func doCmd(sInfo *sshInfo, name, cmd string) {
 	log.Printf("%s 命令输出:\n %s \n", name, string(combo))
 }
 
-//文件下载
+// 文件下载
 func DownLoad(sInfo *sshInfo, localpath, remotepath string) {
 	ftpClient := getftpclient(sInfo.Client)
 	defer ftpClient.Close()
@@ -392,7 +392,7 @@ func DownLoad(sInfo *sshInfo, localpath, remotepath string) {
 	fmt.Println("文件下载成功")
 }
 
-// 远程执行脚本
+// Exec_Task 远程执行脚本
 func Exec_Task(sInfo *sshInfo, localpath, remotepath string) int {
 	UploadFile(sInfo, localpath, remotepath)
 	session, err := sInfo.Client.NewSession()
