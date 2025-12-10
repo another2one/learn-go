@@ -22,7 +22,6 @@ func init() {
 }
 
 func main() {
-
 	conn := pool.Get() // 指向连接池
 	defer conn.Close()
 	_, err := conn.Do("lpush", "userList", "lipan", "shit") // 使用时取连接池里面的连接

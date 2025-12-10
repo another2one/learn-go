@@ -11,7 +11,7 @@ import (
 	"github.com/chromedp/chromedp"
 	"github.com/chromedp/chromedp/device"
 	"learn-go/combination/slice/demo02"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"math"
 	"net/http"
@@ -23,7 +23,7 @@ import (
 var (
 	height  float64
 	width   float64
-	picPath = funcs.ProjectPath + "app/spider/chromedp/lwm/pic/"
+	picPath = tool.ProjectPath + "app/spider/chromedp/lwm/pic/"
 	domian  = `https://www.lewaimai.com`
 )
 

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实时系统监控面板</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"/>
+</head>
+<style>
+    .glow {
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    }
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+    .card {
+        backdrop-filter: blur(10px);
+    }
+</style>
+<body class="bg-gradient-to-br from-gray-900 to-black min-h-screen text-white">
+        <!-- 导航栏 -->
+        <nav class="bg-gray-800/50 border-b border-gray-700">
+        <div class="container mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+        <i class="fas fa-chart-line text-blue-400 text-2xl">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        实时系统监控
+        </h1>
+        </div>
+        <div class="flex items-center space-x-4">
+        <button id="startStream" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-semibold transition-colors">
+        <i class="fas fa-play mr-2"></i>开始流
+        </button>
+        <button id="stopStream" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg font-semibold transition-colors">
+        <i class="fas fa-stop mr-2"></i>停止流
+        </button>
+        </div>
+        </div>
+        </div>
+        </nav>
+
+        <div class="container mx-auto px-4 py-8">
+        <!-- 控制面板 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="card bg-gray-800/30 border border-gray-700 rounded-xl p-6 fade-in">
+        <h2 class="text-lg font-semibold text-blue-400 mb-4">数据流控制</h2>
+        <div class="space-y-3">
+        <div class="flex items-center justify-between">
+        <span>连接状态:</span>
+        <span id="status" class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm">
+        未连接
+        </span>
+        </div>
+        <div class="flex items-center space-x-3">
+        <button id="connectBtn" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg font-semibold transition-colors">
+        <i class="fas fa-plug mr-2"></i>连接
+        </button>
+        <button id="clearBtn" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg font-semibold transition-colors">
+        <i class="fas fa-eraser mr-2"></i>清空
+        </button>
+        </div>
+        </div>
+        </div>
+
+        <div class="card bg-gray-800/30 border border-gray-700 rounded-xl p-6 fade-in" style="animation-delay: 0.1s">
+        <h2 class="text-lg font-semibold text-green-400 mb-4">数据流信息</h2>
+        <div id="streamInfo" class="text-sm text-gray-300">
+        请点击连接开始接收实时数据流
+        </div>
+        </div>
+        </div>
+
+        <!-- 实时数据显示区域 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="card bg-gray-800/30 border border-gray-700 rounded-xl p-6 fade-in" style="animation-delay: 0.2s">
+        <h2 class="text-lg font-semibold text-purple-400 mb-4">实时数据流</h2>
+        <div class="space-y-4">
+        <div class="flex items-center space-x-3">
+        <span class="text-gray-400">数据格式:</span>
+        <span class="text-blue-300">JSON</span>
+        </div>
+        <div id="dataStream" class="h-64 overflow-y-auto bg-gray-900/50 rounded-lg p-4 text-sm font-mono">
+        </div>
+        </div>
+        </div>
+
+        <div class="card bg-gray-800/30 border border-gray-700 rounded-xl p-6 fade-in" style="animation-delay: 0.3s">
+        <canvas id="metricsChart"></canvas>
+        </div>
+        </div>
+        </div>
+
+        <script>
+        // 实时数据流处理逻辑
+        class StreamManager {
+        constructor() {
+        this.eventSource = null;
+        this.isConnected = false;
+    }
+
+        connect() {
+        if (this.isConnected) {
+        return;
+    }
+
+        // 创建EventSource连接（用于Server-Sent Events）
+        this.eventSource = new EventSource('/sse');
+
+        this.eventSource.onopen = (event) => {
+        this.updateStatus('已连接', 'text-green-400', 'bg-green-500/20");
+    }
+
+        this.eventSource.onmessage = (event) => {
+        this.displayData(event.data);
+    };
+
+        this.eventSource.onerror = (event) => {
+        this.updateStatus('连接错误', 'text-red-400', 'bg-red-500/20");
+    };
+
+        this.eventSource.addEventListener('metrics', (event) => {
+        this.updateChart(JSON.parse(event.data)));
+    };
+
+        this.isConnected = true;
+    }
+
+        disconnect() {
+        if (this.eventSource) {
+        this.eventSource.close();
+    }
+        this.isConnected = false;
+        this.updateStatus('未连接', 'text-red-400', 'bg-red-500/20");
+    }
+
+        displayData(data) {
+        const streamElement = document.getElementById('dataStream');
+        const div = document.createElement('div');
+        div.className = 'py-1 border-b border-gray-700`
+        streamElement.appendChild(div);
+        streamElement.scrollTop = streamElement.scrollHeight;
+    }
+
+        updateStatus(text, textColor, bgColor) {
+        const statusElement = document.getElementById('status');
+        statusElement.textContent = text;
+        statusElement.className = `px-3 py-1 ${bgColor} ${textColor} rounded-full text-sm">`;
+    }
+
+        updateChart(data) {
+        // 这里实现Chart.js的更新逻辑
+        console.log('更新图表:', data);
+    }
+    }
+
+        // 初始化流管理器
+        const streamManager = new StreamManager();
+
+        // 绑定按钮事件
+        document.getElementById('connectBtn').addEventListener('click', () => {
+        streamManager.connect();
+    });
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+        document.getElementById('dataStream').innerHTML = '';
+    });
+</script>
+</head>
+</html>

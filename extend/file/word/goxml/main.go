@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 
 	"baliance.com/gooxml/document"
@@ -16,7 +16,7 @@ func main() {
 
 func test() {
 	// /Users/lizhi/Desktop/app/go/learn-go/extend/file/word/goxml/test.docx
-	doc, err := document.Open(funcs.ProjectPath + "extend/file/word/goxml/test.docx")
+	doc, err := document.Open(tool.ProjectPath + "extend/file/word/goxml/test.docx")
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}

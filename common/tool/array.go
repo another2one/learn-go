@@ -1,7 +1,10 @@
-package funcs
+package tool
 
 import (
 	"errors"
+	"fmt"
+	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/lipgloss/table"
 	"math"
 )
 
@@ -27,7 +30,8 @@ type IntUintFloatString interface {
 }
 
 // InArray 判断 item 是否在 s1 里面
-//  true 表示 item 在 s1 里面;  false 表示不在
+//
+//	true 表示 item 在 s1 里面;  false 表示不在
 func InArray[T comparable](item T, s1 []T) bool {
 	for _, v := range s1 {
 		if v == item {
@@ -38,7 +42,8 @@ func InArray[T comparable](item T, s1 []T) bool {
 }
 
 // ArrayChunk 把一个数组分割为新的数组块
-//  true 表示 item 在 s1 里面;  false 表示不在
+//
+//	true 表示 item 在 s1 里面;  false 表示不在
 func ArrayChunk[T any](s1 []T, length int) ([][]T, error) {
 	if length <= 0 {
 		return [][]T{s1}, errors.New("长度错误")
@@ -157,4 +162,29 @@ func DeleteIndex[T any](s1 []T, index int) ([]T, error) {
 		return s1, errors.New("index error, out of slice ... ")
 	}
 	return append(s1[:index], s1[index+1:]...), nil
+}
+
+func Print[T any](s1 []T, index int) ([]T, error) {
+	if index > len(s1)-1 || index < 0 {
+		return s1, errors.New("index error, out of slice ... ")
+	}
+	return append(s1[:index], s1[index+1:]...), nil
+}
+
+func PrettyPrint(tag string, data [][]string) {
+	color := lipgloss.Color(GenerateHexColor())
+	table := table.New().Border(lipgloss.NormalBorder()).
+		BorderStyle(lipgloss.NewStyle().Foreground(color)).
+		StyleFunc(func(row, col int) lipgloss.Style {
+			return lipgloss.NewStyle().Padding(0, 2).Foreground(color)
+		}).
+		Rows(data...)
+
+	var style = lipgloss.NewStyle().
+		Bold(true).
+		Foreground(lipgloss.Color("#FAFAFA")).
+		Background(lipgloss.Color("#7D56F4"))
+
+	fmt.Println(style.Render(" " + tag + " "))
+	fmt.Println(table)
 }

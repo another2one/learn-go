@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"net/http"
 	"strconv"
@@ -38,10 +38,10 @@ func main() {
 		"tags":    strings.Join([]string{"tennis", "pingpong"}, ","),
 		"extend":  string(extend),
 		"time":    strconv.FormatInt(time.Now().Unix(), 10),
-		"nonce":   funcs.RandomStr(12),
+		"nonce":   tool.RandomStr(12),
 	}
 
-	sign := funcs.Sign(postParms)
+	sign := tool.Sign(postParms)
 
 	// 几种提交方式(post postform)及参数接受和验签 考虑特殊字符和大json
 	// urlStr := funcs.BuildQuery(postParms, true) + "&sign=" + sign
@@ -61,7 +61,7 @@ func main() {
 
 	// postform
 	postParms["sign"] = sign
-	resp, err := http.PostForm(host+"/test1.php", funcs.GetFormValue(postParms))
+	resp, err := http.PostForm(host+"/test1.php", tool.GetFormValue(postParms))
 	if err != nil {
 		fmt.Printf("%s 请求错误 ...... \n", err)
 		return

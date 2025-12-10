@@ -6,7 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"net/http"
 	"net/url"
@@ -39,9 +39,9 @@ type Article struct {
 
 // 文章自动发布
 // go run .\main.go -limit 3 -path D:/tmp -sleep 5
-//  - limit 发多少篇文章
-//  - path 文章位置
-//  - sleep 每篇间隔时间 （秒）
+//   - limit 发多少篇文章
+//   - path 文章位置
+//   - sleep 每篇间隔时间 （秒）
 func main() {
 
 	flag.StringVar(&path, "path", "./", ``)
@@ -162,7 +162,7 @@ func postArticle(article Article) bool {
 		return false
 	}
 	dateNow := strconv.FormatInt(time.Now().Unix(), 10)
-	sign := funcs.Md5V(funcs.Md5V(string(aJson)+dateNow) + "sae32242esxae23rsadq2zsare234rdsdxc23rdfw23rcw34r2a165wdwdxw3e")
+	sign := tool.Md5V(tool.Md5V(string(aJson)+dateNow) + "sae32242esxae23rsadq2zsare234rdsdxc23rdfw23rcw34r2a165wdwdxw3e")
 
 	postValue := url.Values{
 		"sign":    {sign},

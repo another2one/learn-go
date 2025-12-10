@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"os"
 	"os/signal"
@@ -184,7 +184,7 @@ func main() {
 						// 	log.Printf("%s 命令输出:\n %s \n", name, string(combo))
 						// }
 
-						if !funcs.InArray(name, []string{"qf_a", "qf_h"}) {
+						if !tool.InArray(name, []string{"qf_a", "qf_h"}) {
 							// UploadFile(sInfo, "D:/default.gif", "/home/wwwroot/default/renren/public/template/pc/images")
 							// sInfo.Session.Output(`sed -i "s/{\$item.img}/{\$item.img|default='\/public\/template\/pc\/images\/default.gif'}/g" /home/wwwroot/default/renren/public/template/pc/index.html`)
 							// sInfo.Session.Output(`sed -i "s/{\$item.img}/{\$item.img|default='\/public\/template\/pc\/images\/default.gif'}/g" /home/wwwroot/default/renren/public/template/pc/node.html`)
@@ -264,7 +264,7 @@ func upNignx(sInfo *sshInfo, name string) {
 	remoteConfDir := "/usr/local/nginx/conf/"
 	remoteConfPath := remoteConfDir + "nginx.conf"
 	localConfPath := "D:/nginx.conf"
-	ok, err := funcs.PathExists(localConfPath)
+	ok, err := tool.PathExists(localConfPath)
 	if err != nil {
 		log.Fatalln("local nginx error : ", err)
 	}

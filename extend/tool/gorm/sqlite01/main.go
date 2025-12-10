@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 )
 
 type User struct {
@@ -16,7 +16,7 @@ type User struct {
 
 func main() {
 
-	db, err := gorm.Open(sqlite.Open(funcs.ProjectPath+"extend/tool/gorm/mysql01/gorm.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(tool.ProjectPath+"extend/tool/gorm/mysql01/gorm.db"), &gorm.Config{})
 	if err != nil {
 		panic("connect db err: " + err.Error())
 	}

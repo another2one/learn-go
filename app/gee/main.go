@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"net/http"
 	"time"
@@ -17,7 +17,7 @@ type student struct {
 }
 
 var (
-	RootPath = funcs.ProjectPath + "app/gee/"
+	RootPath = tool.ProjectPath + "app/gee/"
 )
 
 func FormatAsDate(t time.Time) string {
@@ -84,9 +84,9 @@ func main() {
 	r.GET("/date", func(c *gee.Context) {
 		c.ErrorWithData(500, "error", gee.H{
 			"title":     "gee",
-			"now":       time.Now().Format(funcs.DateTimeFormat),
-			"now_mill":  time.Now().Format(funcs.DateTimeWithMillSecondFormat),
-			"now_micro": time.Now().Format(funcs.DateTimeWithMicroSecondFormat),
+			"now":       time.Now().Format(tool.DateTimeFormat),
+			"now_mill":  time.Now().Format(tool.DateTimeWithMillSecondFormat),
+			"now_micro": time.Now().Format(tool.DateTimeWithMicroSecondFormat),
 		})
 	})
 

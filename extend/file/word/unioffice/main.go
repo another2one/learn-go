@@ -6,7 +6,7 @@ import (
 	"github.com/gomutex/godocx"
 	"github.com/gomutex/godocx/common/units"
 	"github.com/gomutex/godocx/wml/stypes"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"os"
 	"path/filepath"
@@ -14,8 +14,8 @@ import (
 )
 
 var (
-	Path      = funcs.ProjectPath + "extend/file/word/unioffice/zqcrm.docx"
-	basePath  = funcs.ProjectPath + "extend/file/word/unioffice/"
+	Path      = tool.ProjectPath + "extend/file/word/unioffice/zqcrm.docx"
+	basePath  = tool.ProjectPath + "extend/file/word/unioffice/"
 	maxPage   int      // 最大页数
 	maxLine   int      // 最大行数
 	codePaths []string // 代码路径集合（按顺序）
@@ -25,12 +25,12 @@ var (
 // 使用示例 C:\Users\lizhi\go\pkg\mod\baliance.com\gooxml@v1.0.1\_examples
 // 主要是编辑word 读取非文字的时候会有点问题
 func main() {
-	test()
+	ruanzhu()
 }
 
 // ruanzhu 软件源代码（前30页和后30页，每页50行；不足60页则提交全部）
 func ruanzhu() {
-	maxPage = 60
+	maxPage = 100
 	maxLine = 50
 	CodePaths := []string{
 		"/Users/lizhi/Desktop/app/php/waimai/zhuqu-crm/protected/controllers",
@@ -78,10 +78,12 @@ func ruanzhu() {
 				}
 				p := document.AddParagraph("")
 				for _, text := range textArr {
-					p.AddText(text).AddBreak(&breakLine)
+					p.AddText(text).Size(10).AddBreak(&breakLine)
 				}
-				document.AddPageBreak()
-				fmt.Printf("文件 %d: %s \n", page, d.Name())
+				if page != maxPage {
+					document.AddPageBreak()
+				}
+				fmt.Printf("文件%d: %s \n", page, d.Name())
 				page++
 			}
 
@@ -117,8 +119,9 @@ func readLines(filePath string) ([]string, error) {
 	lineCount := 0
 
 	for scanner.Scan() && lineCount < maxLine {
-		// 去除空行
-		if len(strings.TrimSpace(scanner.Text())) == 0 {
+		// 去除空行和注释
+		str := strings.TrimSpace(scanner.Text())
+		if len(str) == 0 || tool.HasAnyPrefix(str, "/*", "*", "//", "<!--") {
 			continue
 		}
 		textArr[lineCount] = scanner.Text()
@@ -126,7 +129,7 @@ func readLines(filePath string) ([]string, error) {
 	}
 
 	if lineCount < 50 {
-		return nil, fmt.Errorf("(文件共 %d 行) \n", lineCount)
+		return nil, fmt.Errorf("文件共 %d 行 \n", lineCount)
 	}
 
 	return textArr, scanner.Err()
@@ -158,7 +161,7 @@ func test() {
 	document.AddParagraph("first item in ordered list").Style("List Number")
 	// 添加图片
 	pic1Path := basePath + "test.jpg"
-	w, h, err := funcs.GetImageDimensions(pic1Path)
+	w, h, err := tool.GetImageDimensions(pic1Path)
 	if err != nil {
 		fmt.Printf("获取图片(%s)尺寸失败: %s \n", pic1Path, err)
 	} else {

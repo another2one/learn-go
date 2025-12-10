@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"net/http"
 	"os"
@@ -19,7 +19,7 @@ var (
 	keyWord      string
 	ErrorFileOp  = errors.New("op file error")
 	ErrorUrlGet  = errors.New("url get error")
-	downLoadPath = funcs.ProjectPath + "runtime/download/"
+	downLoadPath = tool.ProjectPath + "runtime/download/"
 )
 
 func main() {

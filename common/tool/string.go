@@ -1,12 +1,14 @@
-package funcs
+package tool
 
 import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"math"
 	"math/rand"
 	"net/url"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -74,4 +76,33 @@ func GetFormValue(a map[string]string) url.Values {
 		u[k] = []string{v}
 	}
 	return u
+}
+
+// GetCell 获取单元格 都是从0开始
+func GetCell(rowIndex int, columnIndex int) string {
+	columnStr := strconv.Itoa(columnIndex + 1)
+	if rowIndex < 26 {
+		return ByteToStr(byte(rowIndex+'A')) + columnStr
+	}
+	return string([]byte{byte(math.Floor(float64(rowIndex)/26) + 64), byte(rowIndex)%26 + 65}) + columnStr
+}
+
+func ByteToStr(num byte) string {
+	return string([]byte{num})
+}
+
+func HasAnyPrefix(str string, prefixes ...string) bool {
+	for _, prefix := range prefixes {
+		if strings.HasPrefix(str, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+func GenerateHexColor() string {
+	r := rand.Intn(156)
+	g := rand.Intn(256)
+	b := rand.Intn(256)
+	return fmt.Sprintf("#%02X%02X%02X", r, g, b)
 }

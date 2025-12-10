@@ -20,7 +20,7 @@ import (
 func test() {
 	for i := 1; i < 5; i++ {
 		fmt.Println(i, ": hello ,world")
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Second)
 	}
 }
 
@@ -29,7 +29,7 @@ func main() {
 	go test()
 	for i := 1; i < 3; i++ {
 		fmt.Println(strconv.Itoa(i) + ": hello ,golang")
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Second)
 	}
 	endTime := time.Now()
 	fmt.Println("process used ", endTime.Sub(startTime))

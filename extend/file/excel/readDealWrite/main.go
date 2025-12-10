@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/xuri/excelize/v2"
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"log"
 	"os"
 	"strconv"
 )
 
 var (
-	excelFile = funcs.ProjectPath + "extend/file/excel/readDealWrite/test.xlsx"
+	excelFile = tool.ProjectPath + "extend/file/excel/readDealWrite/test.xlsx"
 )
 
 // https://xuri.me/excelize/zh-hans/cell.html

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"learn-go/common/funcs"
+	"learn-go/common/tool"
 	"time"
 
 	"go.uber.org/zap"
@@ -17,7 +17,7 @@ func main() {
 		zap.Int("attempt1", 3),
 		zap.Duration("backoff", time.Second),
 	)
-	funcs.InArray(3, []int{2, 3})
+	tool.InArray(3, []int{2, 3})
 	sugar := logger.Sugar()
 	sugar.Infow("failed to fetch URL",
 		"url", url,

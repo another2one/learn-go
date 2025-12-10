@@ -13,7 +13,7 @@ func TestClient(t *testing.T) {
 	jsonStr, _ := json.Marshal(sendData)
 
 	//此处需要换成你自己的接口地址
-	httpUrl := "https://api-local.lewaimai.com"
+	httpUrl := "http://api-local.lewaimai.com"
 	headerData := make(map[string]string)
 	headerData["X-Ca-Key"] = "22527885"
 	headerData["Content-Type"] = "application/json;charset=UTF-8"
