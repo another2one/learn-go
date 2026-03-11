@@ -35,9 +35,10 @@ type Article struct {
 
 // 文章自动发布
 // go run .\main.go -limit 3 -path D:/tmp -sleep 5
-//  - limit 发多少篇文章
-//  - path 文章位置
-//  - sleep 每篇间隔时间 （秒）
+//   - limit 发多少篇文章
+//   - path 文章位置
+//   - sleep 每篇间隔时间 （秒）
+//
 // db.Raw("SELECT id, name, age FROM users WHERE id = ?", 3).Scan(&result)
 // db.Exec("update users set money=? where name = ?", gorm.Expr("money * ? + ?", 10000, 1), "jinzhu")
 func main() {
@@ -79,7 +80,7 @@ func main() {
 	// 执行操作
 	go func() {
 		// 打开目录
-		dir, err := ioutil.ReadDir(path)
+		dir, err := os.ReadDir(path)
 		if err != nil {
 			log.Fatalln("dir error")
 		}

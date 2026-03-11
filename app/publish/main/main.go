@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"learn-go/common/tool"
 	"log"
@@ -181,7 +182,7 @@ func postArticle(article Article) bool {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 
 	if err != nil {
 		fmt.Printf("%s 获取返回数据失败 ...... \n", article.Title)

@@ -1,8 +1,9 @@
 package main
 
 import (
-	"learn-go/app/chat/server/process"
 	"fmt"
+	"learn-go/app/chat/server/process"
+	"log"
 	"net"
 )
 
@@ -15,7 +16,12 @@ func main() {
 	} else {
 		fmt.Println("listening port 8888 ... ")
 	}
-	defer listen.Close()
+	defer func(listen net.Listener) {
+		err := listen.Close()
+		if err != nil {
+			log.Println("close error: ", err)
+		}
+	}(listen)
 
 	for {
 		conn, err := listen.Accept()

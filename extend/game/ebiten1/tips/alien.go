@@ -32,7 +32,7 @@ func NewAlien(cfg *conf.Config) *Alien {
 		log.Fatal(err)
 	}
 
-	width, height := img.Size()
+	width, height := img.Bounds().Dx(), img.Bounds().Dy()
 	// fmt.Println(width, " -- ", height)
 	limit := Limit{0, float64(cfg.LayoutWidth - width), 0, float64(cfg.LayoutHeight - height)}
 	Alien := &Alien{

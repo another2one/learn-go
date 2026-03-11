@@ -1,5 +1,12 @@
 package conf
 
+import (
+	"bufio"
+	"os"
+)
+
+var Reader *bufio.Reader
+
 const (
 	LoginType            = "login"
 	RegisterType         = "register"
@@ -9,6 +16,10 @@ const (
 	SendGroupType        = "sendGroup"
 	SendUserType         = "sendUser"
 )
+
+func init() {
+	Reader = bufio.NewReader(os.Stdin)
+}
 
 const (
 	LoginStatusOffline = iota

@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"learn-go/app/chat/conf"
 	"encoding/json"
 	"fmt"
+	"learn-go/app/chat/conf"
 )
 
 func GetServerPushData(data string, msgType string) (msgDataBS []byte, err error) {

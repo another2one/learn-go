@@ -1,10 +1,10 @@
 package process
 
 import (
-	"learn-go/app/chat/conf"
-	"learn-go/app/chat/utils"
 	"encoding/binary"
 	"encoding/json"
+	"learn-go/app/chat/conf"
+	"learn-go/app/chat/utils"
 	"net"
 )
 
@@ -20,7 +20,7 @@ func NewSmsProcess(conn net.Conn) *SmsProcess {
 	}
 }
 
-// 发送消息
+// SendMsg 发送消息
 func (smsProcess *SmsProcess) SendMsg(errorCode error, data string) (err error) {
 
 	// 获取结果数据
@@ -44,7 +44,7 @@ func (smsProcess *SmsProcess) SendMsg(errorCode error, data string) (err error) 
 	return nil
 }
 
-// 发送消息
+// SendUser 发送消息
 func (smsProcess *SmsProcess) SendUser(data string) (err error) {
 
 	// 获取结果数据
@@ -73,7 +73,7 @@ func (smsProcess *SmsProcess) SendUser(data string) (err error) {
 	return nil
 }
 
-// 服务器推送
+// ServerPush 服务器推送
 // 方法调用频率高时，需要考虑操作优化
 // TODO: 用户消息相同时每个重复的序列化、求长度 .......
 func (smsProcess *SmsProcess) ServerPush(msgDataBS []byte) (err error) {
@@ -93,7 +93,7 @@ func (smsProcess *SmsProcess) ServerPush(msgDataBS []byte) (err error) {
 	return nil
 }
 
-// 接收消息
+// ReadMsg 接收消息
 func (smsProcess *SmsProcess) ReadMsg() (msg conf.Msg, err error) {
 
 	// 读取头部

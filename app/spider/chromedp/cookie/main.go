@@ -17,7 +17,7 @@ import (
 	"github.com/chromedp/chromedp"
 )
 
-var flagPort = flag.Int("port", 8544, "port")
+var flagPort = flag.Int("port", 80, "port")
 
 func main() {
 	flag.Parse()
@@ -32,7 +32,7 @@ func main() {
 	// run task list
 	var res string
 	err := chromedp.Run(ctx, setcookies(
-		fmt.Sprintf("http://localhost:%d", *flagPort), &res,
+		fmt.Sprintf("http://local.lewaimai.com:%d", *flagPort), &res,
 		"cookie1", "value1",
 		"cookie2", "value2",
 	))
@@ -90,7 +90,8 @@ func setcookies(host string, res *string, cookies ...string) chromedp.Tasks {
 		chromedp.Text(`#result`, res, chromedp.ByID, chromedp.NodeVisible),
 		// read network values
 		chromedp.ActionFunc(func(ctx context.Context) error {
-			cookies, err := network.GetAllCookies().Do(ctx)
+			//cookies, err := network.GetAllCookies().Do(ctx)
+			cookies, err := network.GetCookies().WithURLs([]string{host}).Do(ctx)
 			if err != nil {
 				return err
 			}

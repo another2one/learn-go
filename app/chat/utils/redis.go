@@ -28,7 +28,7 @@ func GetConn() redis.Conn {
 	return redisPool.Get()
 }
 
-// 加入在线列表
+// AddOnline 加入在线列表
 func AddOnline(i int) (err error) {
 	conn := redisPool.Get()
 	defer conn.Close()
@@ -36,7 +36,7 @@ func AddOnline(i int) (err error) {
 	return
 }
 
-// 移除在线列表
+// RemoveOnline 移除在线列表
 func RemoveOnline(i int) (err error) {
 	conn := redisPool.Get()
 	defer conn.Close()
@@ -44,7 +44,7 @@ func RemoveOnline(i int) (err error) {
 	return
 }
 
-// 返回在线列表
+// GetOnlineList 返回在线列表
 func GetOnlineList() (list []int, err error) {
 	conn := redisPool.Get()
 	defer conn.Close()

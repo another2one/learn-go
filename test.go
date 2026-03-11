@@ -5,7 +5,15 @@ import (
 	"fmt"
 )
 
-func main() {
+type order struct {
+	order_id string
+}
 
-	fmt.Printf("res6: %v \n", 123)
+func main() {
+	order1 := order{order_id: "123"}
+	fmt.Printf("res6: %v \n", map[string]map[string]string{"order": {"order_id": "123"}})
+	fmt.Printf("res6: %+v \n", map[string]map[string]string{"order": {"order_id": "123"}})
+	fmt.Printf("res6: %v \n", order1)
+	fmt.Printf("res6: %+v \n", order1)
+	fmt.Printf("res6: %#v \n", order1)
 }

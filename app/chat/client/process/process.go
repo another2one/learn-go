@@ -1,10 +1,10 @@
 package process
 
 import (
-	"learn-go/app/chat/conf"
 	"encoding/json"
 	"fmt"
 	"io"
+	"learn-go/app/chat/conf"
 	"net"
 )
 
@@ -46,7 +46,7 @@ func (process *Process) receiveMsg() {
 		msg, err := NewSmsProcess(process.Conn).ReadMsg()
 		if err != nil {
 			if err == io.EOF {
-				fmt.Println("牛逼, 强行离开系统！！！")
+				fmt.Println("NB, 离开系统！！！")
 			} else {
 				fmt.Println(err)
 			}

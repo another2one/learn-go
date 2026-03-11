@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
 )
@@ -19,7 +20,6 @@ func main() {
 	rows := [][]string{
 		{"Chinese", "您好", "你好"},
 		{"Japanese", "こんにちは", "やあ"},
-		{"Arabic", "أهلين", "أهلا"},
 		{"Russian", "Здравствуйте", "Привет"},
 		{"Spanish", "Hola", "¿Qué tal?"},
 	}
@@ -30,7 +30,7 @@ func main() {
 		lightGray = lipgloss.Color("241")
 
 		headerStyle  = lipgloss.NewStyle().Foreground(purple).Bold(true).Align(lipgloss.Center)
-		cellStyle    = lipgloss.NewStyle().Padding(0, 1)
+		cellStyle    = lipgloss.NewStyle().Padding(0, 1).Width(24)
 		oddRowStyle  = cellStyle.Foreground(gray)
 		evenRowStyle = cellStyle.Foreground(lightGray)
 	)
