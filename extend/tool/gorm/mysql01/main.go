@@ -20,7 +20,7 @@ func main() {
 	var err error
 	file, err := os.OpenFile("./sql.txt", os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		log.Fatalf("open file error:", err)
+		log.Fatalf("open file error: %v", err)
 	}
 	defer file.Close()
 

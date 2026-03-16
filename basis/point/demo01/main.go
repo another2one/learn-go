@@ -1,7 +1,8 @@
 package main
 
 // go语言中哪些类型的值不可以被取地址
-//  不可变的，临时结果和不安全的
+//
+//	不可变的，临时结果和不安全的
 func main() {
 	// 常量不可寻址
 	// const con = 123
@@ -29,7 +30,7 @@ func main() {
 	type stu struct{ name string }
 	stru := stu{"lizhi"}
 	// _ = &(interface{})(stru)
-	ints := interface{}(stru)
+	ints := any(stru)
 	_ = &ints
 
 	// 结构体字面量成员

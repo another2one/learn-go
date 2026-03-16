@@ -29,12 +29,12 @@ func TestMySort(t *testing.T) {
 	resChan := make(chan string, GOROUTING_NUM)
 
 	// 并发检查每个文件排序
-	for i := 0; i < GOROUTING_NUM; i++ {
+	for i := range GOROUTING_NUM {
 		go isFileSort(getFileName(NEW_NAME, i), resChan, t)
 	}
 
 	worngNumberSlice := make([]string, 0, GOROUTING_NUM)
-	for i := 0; i < GOROUTING_NUM; i++ {
+	for range GOROUTING_NUM {
 		s := <-resChan
 		if len(s) > 0 {
 			worngNumberSlice = append(worngNumberSlice, s)
@@ -69,7 +69,7 @@ func isFileSort(fileName string, resChan chan<- string, t *testing.T) {
 
 	// 随机检查
 	// t.Logf("intSlice len = %v, type is %T\n", len(intSlice), intSlice)
-	for s := 0; s < int(NUMBER_NUM/10); s++ {
+	for range int(NUMBER_NUM / 10) {
 		i, j := rand.Intn(NUMBER_NUM), rand.Intn(NUMBER_NUM)
 		if (i-j)*(intSlice[i]-intSlice[j]) < 0 {
 			resChan <- fileName

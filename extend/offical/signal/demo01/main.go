@@ -9,8 +9,7 @@ import (
 
 var _ Mux = (*mux)(nil)
 
-type Mux interface {
-}
+type Mux any
 
 type mux struct {
 	name string

@@ -36,7 +36,7 @@ func WriteDataTofile(writechan chan<- int, i int) {
 
 	var intArray [NUMBER_NUM]int
 	rand.Seed(time.Now().Unix())
-	for i := 0; i < NUMBER_NUM; i++ {
+	for i := range NUMBER_NUM {
 		intArray[i] = rand.Intn(2000)
 	}
 	strByteArray, err := json.Marshal(intArray)
@@ -107,11 +107,11 @@ func Sort() {
 
 	writeChan := make(chan int, GOROUTING_NUM)
 
-	for i := 0; i < GOROUTING_NUM; i++ {
+	for i := range GOROUTING_NUM {
 		go WriteDataTofile(writeChan, i)
 	}
 
-	for i := 0; i < GOROUTING_NUM; i++ {
+	for range GOROUTING_NUM {
 		wg.Add(1)
 		go sortData(<-writeChan)
 	}

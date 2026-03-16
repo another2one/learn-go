@@ -82,6 +82,6 @@ func main() {
 	}
 }
 
-func print(val interface{}) {
+func print(val any) {
 	fmt.Printf("val's type is %T, val = %v \n", val, val)
 }

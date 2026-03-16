@@ -58,7 +58,7 @@ func main() {
 	go writeData(intChan)
 
 	wg.Add(GOROUTING_NUM)
-	for i := 0; i < GOROUTING_NUM; i++ {
+	for range GOROUTING_NUM {
 		go readData(intChan, resChan, exitChan)
 	}
 

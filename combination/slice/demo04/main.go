@@ -14,7 +14,7 @@ func main() {
 
 	type node [100]byte
 	var nodeSlice []*node
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		nodeSlice = append(nodeSlice, &node{})
 	}
 

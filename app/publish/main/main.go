@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -147,12 +148,7 @@ func readFile(path string) string {
 
 // in_array item 是否在切片 s 里面
 func in_array(item string, s []string) bool {
-	for _, v := range s {
-		if v == item {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(s, item)
 }
 
 // postArticle 执行文章发布

@@ -9,14 +9,14 @@ func main() {
 
 	chan1 := make(chan string, 10)
 	go func() {
-		for i := 0; i < 10; i++ {
+		for i := range 10 {
 			chan1 <- "chan1: hello" + fmt.Sprintf("%d", i)
 		}
 	}()
 
 	chan2 := make(chan string, 10)
 	go func() {
-		for i := 0; i < 10; i++ {
+		for i := range 10 {
 			chan2 <- "chan2: hello" + fmt.Sprintf("%d", i)
 		}
 	}()

@@ -11,8 +11,8 @@ import (
 )
 
 type Task struct {
-	Handler func(v ...interface{}) error
-	Params  []interface{}
+	Handler func(v ...any) error
+	Params  []any
 }
 
 type Pool struct {
@@ -34,7 +34,7 @@ var (
 	workNum = 0
 )
 
-func NewTask(handler func(v ...interface{}) error, params []interface{}) *Task {
+func NewTask(handler func(v ...any) error, params []any) *Task {
 	return &Task{
 		Handler: handler,
 		Params:  params,
@@ -140,8 +140,8 @@ func main() {
 	// 创建一个协程池
 	p := NewPool(10)
 	defer p.Close()
-	for i := 0; i < 25; i++ {
-		t := NewTask(func(v ...interface{}) error {
+	for i := range 25 {
+		t := NewTask(func(v ...any) error {
 			switch v[0].(type) {
 			case int:
 				if v[0] == 3 {
@@ -150,7 +150,7 @@ func main() {
 				log.Printf("%d 号任务执行完成 。。。 \n", v[0])
 			}
 			return nil
-		}, []interface{}{i})
+		}, []any{i})
 		p.Put(t)
 	}
 	fmt.Println(66)

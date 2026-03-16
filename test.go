@@ -16,4 +16,5 @@ func main() {
 	fmt.Printf("res6: %v \n", order1)
 	fmt.Printf("res6: %+v \n", order1)
 	fmt.Printf("res6: %#v \n", order1)
+
 }

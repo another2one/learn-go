@@ -17,7 +17,7 @@ import (
 // 9. 通道满以后(或者无缓冲通道)写入会阻塞，如果协程都退出了就好报错
 
 func test() {
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		time.Sleep(time.Second * 2)
 		fmt.Println("666")
 	}
@@ -61,7 +61,7 @@ func main() {
 	intChan3 := make(chan int, 3)
 	go test()
 
-	for i := 0; i < 3; i++ {
+	for i := range 3 {
 		intChan3 <- i // 写满后，等待其他协程读取，没有其他协程则会报错
 	}
 

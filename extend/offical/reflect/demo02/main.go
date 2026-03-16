@@ -18,7 +18,7 @@ func main() {
 	// When the function is invoked, reflect turns the arguments
 	// into Values, calls swap, and then turns swap's result slice
 	// into the values returned by the new function.
-	makeSwap := func(fptr interface{}) {
+	makeSwap := func(fptr any) {
 		// fptr is a pointer to a function.
 		// Obtain the function value itself (likely nil) as a reflect.Value
 		// so that we can query its type and then set the value.

@@ -55,11 +55,11 @@ func main() {
 	fmt.Println(arrSlice)
 
 	// 存盘
-	var str string
+	var str strings.Builder
 	for _, node := range sparseSlice {
-		str += fmt.Sprintf("%d %d %d \n", node.row, node.col, node.val)
+		str.WriteString(fmt.Sprintf("%d %d %d \n", node.row, node.col, node.val))
 	}
-	err := ioutil.WriteFile("D:/go/learn/src/dataStructure/sparseArray/sparse.data", []byte(str), 0666)
+	err := ioutil.WriteFile("D:/go/learn/src/dataStructure/sparseArray/sparse.data", []byte(str.String()), 0666)
 	if err != nil {
 		fmt.Println("write error: ", err)
 	}
@@ -80,17 +80,17 @@ func main() {
 			s1[position] = node1[2]
 		}
 	}
-	var realStr = ""
+	var realStr strings.Builder
 	for index, val := range s1 {
 		if index > 0 && index%node1[0] == 0 {
-			realStr += "\n" + strconv.Itoa(val)
+			realStr.WriteString("\n" + strconv.Itoa(val))
 		} else if index == 0 {
-			realStr += strconv.Itoa(val)
+			realStr.WriteString(strconv.Itoa(val))
 		} else {
-			realStr += " " + strconv.Itoa(val)
+			realStr.WriteString(" " + strconv.Itoa(val))
 		}
 	}
-	ioutil.WriteFile("D:/go/learn/src/dataStructure/sparseArray/array.data", []byte(realStr), 0666)
+	ioutil.WriteFile("D:/go/learn/src/dataStructure/sparseArray/array.data", []byte(realStr.String()), 0666)
 }
 
 func getSlice(str string) ([]int, error) {

@@ -8,6 +8,6 @@ import (
 
 func main() {
 	s := "hello"
-	rs := strutil.ReverseStr(s)
+	rs := strutil.Reverse(s)
 	fmt.Println(rs) //olleh
 }

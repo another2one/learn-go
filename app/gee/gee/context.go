@@ -31,7 +31,7 @@ func newContext(w http.ResponseWriter, req *http.Request) *Context {
 	}
 }
 
-type H map[string]interface{}
+type H map[string]any
 
 // Next 中间件主要执行逻辑 666
 func (c *Context) Next() {
@@ -42,12 +42,12 @@ func (c *Context) Next() {
 	}
 }
 
-func (c *Context) String(code int, format string, a ...interface{}) {
+func (c *Context) String(code int, format string, a ...any) {
 	html := fmt.Sprintf(format, a...)
 	c.Data(code, []byte(html))
 }
 
-func (c *Context) HTML(code int, name string, data interface{}) {
+func (c *Context) HTML(code int, name string, data any) {
 	c.SetHeader("Content-Type", "text/html")
 	c.Status(code)
 	if err := c.engine.htmlTemplates.ExecuteTemplate(c.Writer, name, data); err != nil {
@@ -80,7 +80,7 @@ func (c *Context) Error(code int, msg string) {
 	c.JSON(http.StatusOK, H{
 		"code": code,
 		"msg":  msg,
-		"data": map[string]interface{}{},
+		"data": map[string]any{},
 	})
 }
 

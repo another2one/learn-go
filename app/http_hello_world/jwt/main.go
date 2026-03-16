@@ -116,7 +116,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 func ValidateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
 	token, err := request.ParseFromRequest(r, request.AuthorizationHeaderExtractor,
-		func(token *jwt.Token) (interface{}, error) {
+		func(token *jwt.Token) (any, error) {
 			return []byte(SecretKey), nil
 		})
 
@@ -136,7 +136,7 @@ func ValidateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.H
 
 }
 
-func JsonResponse(response interface{}, w http.ResponseWriter) {
+func JsonResponse(response any, w http.ResponseWriter) {
 
 	json, err := json.Marshal(response)
 	if err != nil {

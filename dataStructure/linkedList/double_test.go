@@ -13,7 +13,7 @@ type water struct {
 
 var link Link
 
-func (water *water) Find(name interface{}) bool {
+func (water *water) Find(name any) bool {
 	switch name := name.(type) {
 	case string:
 		return water.Name == name

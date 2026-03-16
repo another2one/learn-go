@@ -41,7 +41,7 @@ func handlerData(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(qUrl)
 	fibRev := Fib()
 	var fib uint64
-	for i := 0; i < 5000; i++ {
+	for range 5000 {
 		fib = fibRev()
 		fmt.Println("fib = ", fib)
 	}

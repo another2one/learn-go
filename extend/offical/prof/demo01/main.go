@@ -55,7 +55,7 @@ func main() {
 
 func getS1() []int {
 	s1 := make([]int, 10000000)
-	for i := 0; i < 10000000; i++ {
+	for i := range 10000000 {
 		s1[i] = i
 	}
 	return s1

@@ -28,7 +28,7 @@ func (this Student) GetName() string {
 	return this.Name
 }
 
-func testInt(i interface{}) {
+func testInt(i any) {
 	// 将 i 转为 reflect.Value
 	ri := reflect.ValueOf(i)
 	fmt.Printf("ri type is %v, kind is %v, value is %+v \n", reflect.TypeOf(i), ri.Kind(), ri)
@@ -40,14 +40,14 @@ func testInt(i interface{}) {
 	fmt.Printf("stu type is %T \n", stu)
 }
 
-func testStruct(i interface{}) {
+func testStruct(i any) {
 
 	// 获取i的值、类型、类别
 	rvi := reflect.ValueOf(i)
 	rti := reflect.TypeOf(i)
 	ki := rvi.Kind()
 
-	if ki == reflect.Ptr {
+	if ki == reflect.Pointer {
 		rvi = rvi.Elem()
 		rti = rti.Elem()
 	}
@@ -87,7 +87,7 @@ func testStruct(i interface{}) {
 		fmt.Println("num params:", numParams)
 		res := rvi.Method(i).Call(params[:numParams])
 		numRes := mtype.NumOut()
-		for i := 0; i < numRes; i++ {
+		for i := range numRes {
 			out := mtype.Out(i)
 			switch out.Kind() {
 			case reflect.String:

@@ -10,7 +10,7 @@ type Student struct {
 	Age  int
 }
 
-func test(i interface{}) {
+func test(i any) {
 }
 
 func main() {
@@ -33,7 +33,7 @@ func main() {
 	Canset(&m)
 
 	fmt.Printf("model type: %T \n", model)
-	st = reflect.TypeOf(model) // ptr
+	st = reflect.TypeFor[*Student]() // ptr
 	fmt.Println("reflect.TypeOf(model):", st.String())
 	st = st.Elem() // struct
 	fmt.Println("reflect.TypeOf(model).Elem():", st.String())
@@ -72,7 +72,7 @@ func main() {
 	fmt.Println("model2: ", model2)
 }
 
-func Canset(i interface{}) {
+func Canset(i any) {
 	s := reflect.ValueOf(i).Elem()
 	if s.CanSet() {
 		fmt.Printf("%v can set \n", s.Kind())

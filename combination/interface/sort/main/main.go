@@ -11,7 +11,7 @@ func main() {
 
 	rand.Seed(time.Now().Unix())
 	var s1 []hero
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		s1 = append(s1, hero{
 			"英雄" + fmt.Sprintf("%d", rand.Intn(100)) + "号",
 			rand.Intn(100),

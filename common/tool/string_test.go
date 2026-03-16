@@ -33,7 +33,7 @@ func TestGetCell(t *testing.T) {
 
 func TestGenerateHexColor(t *testing.T) {
 	var style = lipgloss.NewStyle().Bold(true)
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		color := GenerateHexColor()
 		style.Foreground(lipgloss.Color(color))
 		fmt.Println(style.Render(color))

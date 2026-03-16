@@ -14,7 +14,7 @@ func main() {
 
 	// map
 	// 序列化
-	testMap := make(map[string]interface{})
+	testMap := make(map[string]any)
 	testMap["name"] = "lizhi"
 	testMap["age"] = 12
 	jsonMap, _ := json.Marshal(testMap)

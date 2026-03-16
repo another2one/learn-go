@@ -57,8 +57,8 @@ func test(x, y, step int) (res bool) {
 func main() {
 
 	test(0, 0, 0)
-	for i := 0; i < 5; i++ {
-		for j := 0; j < 5; j++ {
+	for i := range 5 {
+		for j := range 5 {
 			fmt.Printf("%d  ", maze[i][j])
 		}
 		fmt.Println()

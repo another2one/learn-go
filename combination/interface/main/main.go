@@ -50,7 +50,7 @@ func (c Phone) Write() {
 	fmt.Println("Phone writting ... ")
 }
 
-func PrintAll(vals []interface{}) {
+func PrintAll(vals []any) {
 	for _, val := range vals {
 		fmt.Println(val)
 	}
@@ -107,7 +107,7 @@ func main() {
 	}
 	names := []string{"stanley", "david", "oscar"}
 	// PrintAll(names) // cannot use names (variable of type []string) as []interface{}
-	vals := make([]interface{}, len(names))
+	vals := make([]any, len(names))
 	for i, v := range names {
 		vals[i] = v
 	}

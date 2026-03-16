@@ -1,8 +1,6 @@
 module learn-go
 
-go 1.24.0
-
-toolchain go1.24.4
+go 1.25.0
 
 require (
 	baliance.com/gooxml v1.0.1
@@ -34,11 +32,11 @@ require (
 	github.com/xuri/excelize/v2 v2.10.0
 	github.com/zmexing/go-sensitive-word v1.3.4
 	go.uber.org/zap v1.27.1
-	golang.org/x/crypto v0.46.0
-	golang.org/x/image v0.34.0
-	golang.org/x/net v0.47.0
-	golang.org/x/sync v0.19.0
-	google.golang.org/grpc v1.78.0
+	golang.org/x/crypto v0.48.0
+	golang.org/x/image v0.36.0
+	golang.org/x/net v0.51.0
+	golang.org/x/sync v0.20.0
+	google.golang.org/grpc v1.79.2
 	google.golang.org/protobuf v1.36.11
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/driver/sqlite v1.6.0
@@ -148,10 +146,10 @@ require (
 	go.uber.org/mock v0.5.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/mod v0.30.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
-	golang.org/x/tools v0.39.0 // indirect
+	golang.org/x/mod v0.32.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
+	golang.org/x/tools v0.41.0 // indirect
 	google.golang.org/genproto v0.0.0-20210602131652-f16073e35f0c // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect

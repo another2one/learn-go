@@ -11,7 +11,7 @@ const NUM = 1000
 func getArray1() func() [NUM]int {
 	var arr [NUM]int
 	rand.Seed(time.Now().Unix())
-	for i := 0; i < NUM; i++ {
+	for i := range NUM {
 		arr[i] = rand.Intn(NUM)
 		//arr = [NUM]int{15, 29, 10, 15, 28, 50, 21, 20, 24, 28, 23}
 	}
@@ -41,7 +41,7 @@ func useTime() {
 func bubbleSort() {
 	arr, step, change := getArray(), 0, 0
 	length := len(arr)
-	for i := 0; i < length; i++ {
+	for i := range length {
 		for j := i + 1; j < length; j++ {
 			step++
 			if arr[i] > arr[j] {
@@ -57,7 +57,7 @@ func bubbleSort() {
 func selectSort() {
 	arr, step, change := getArray(), 0, 0
 	length, min := len(arr), 0
-	for i := 0; i < length; i++ {
+	for i := range length {
 		min = i
 		for j := i + 1; j < length; j++ {
 			step++

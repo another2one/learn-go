@@ -9,7 +9,7 @@ type Student struct {
 	Name  string `json:"name"`
 	score int
 	hobby []string
-	grade map[string]interface{}
+	grade map[string]any
 	Animal
 }
 
@@ -20,7 +20,7 @@ type Animal struct {
 
 // 遍历结构体
 func main() {
-	grade := make(map[string]interface{}, 6)
+	grade := make(map[string]any, 6)
 	grade["语文"] = 105
 	grade["数学"] = 96
 	grade["英语"] = 112
@@ -36,7 +36,7 @@ func main() {
 	}
 
 	rvi := reflect.ValueOf(student)
-	rti := reflect.TypeOf(student)
+	rti := reflect.TypeFor[Student]()
 	for i := 0; i < rti.NumField(); i++ {
 		fname := rti.Field(i).Name
 		fvalue := rvi.Field(i)

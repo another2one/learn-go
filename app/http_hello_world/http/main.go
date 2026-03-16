@@ -109,14 +109,19 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	// 模拟持续数据流
 	for i := 1; i <= 5; i++ {
 		// 构建消息
-		message := fmt.Sprintf("Data chunk #%d at %s\n", i, time.Now().Format("15:04:05"))
-		fmt.Fprintf(w, message)
+		_, err := fmt.Fprintf(w, "Data chunk #%d at %s\n", i, time.Now().Format("15:04:05"))
+		if err != nil {
+			return
+		}
 		flusher.Flush()             // 立即将数据块发送到客户端
 		time.Sleep(1 * time.Second) // 每秒发送一次
 	}
 
 	// 发送结束信号
-	fmt.Fprintf(w, "Stream completed at %s\n", time.Now().Format("2006-01-02 15:04:05"))
+	_, err := fmt.Fprintf(w, "Stream completed at %s\n", time.Now().Format("2006-01-02 15:04:05"))
+	if err != nil {
+		return
+	}
 }
 
 // Message 定义流式传输的数据结构

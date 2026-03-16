@@ -6,6 +6,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
 	"math"
+	"slices"
 )
 
 // https://segmentfault.com/a/1190000041634906
@@ -33,12 +34,7 @@ type IntUintFloatString interface {
 //
 //	true 表示 item 在 s1 里面;  false 表示不在
 func InArray[T comparable](item T, s1 []T) bool {
-	for _, v := range s1 {
-		if v == item {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(s1, item)
 }
 
 // ArrayChunk 把一个数组分割为新的数组块
@@ -54,11 +50,8 @@ func ArrayChunk[T any](s1 []T, length int) ([][]T, error) {
 	}
 	cap := int(math.Ceil(float64(arrLen) / float64(length)))
 	s2 := make([][]T, cap)
-	for i := 0; i < cap; i++ {
-		right := (i + 1) * length
-		if right >= arrLen {
-			right = arrLen
-		}
+	for i := range cap {
+		right := min((i+1)*length, arrLen)
 		s2[i] = s1[i*length : right]
 	}
 	return s2, nil

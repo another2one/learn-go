@@ -22,7 +22,7 @@ func main() {
 			}
 		}
 	}
-	for i := uint32(0); i < 10; i++ {
+	for i := range uint32(10) {
 		go func(i uint32) {
 			fn := func() {
 				fmt.Println(i)

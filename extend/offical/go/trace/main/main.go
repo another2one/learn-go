@@ -21,7 +21,7 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	for i := 0; i < 12; i++ {
+	for i := range 12 {
 		wg.Add(1)
 		go func(i int) {
 			fmt.Println(i)

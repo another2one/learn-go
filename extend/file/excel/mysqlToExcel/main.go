@@ -3,13 +3,14 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"learn-go/common/tool"
 	model2 "learn-go/extend/file/excel/mysqlToExcel/model"
 	"log"
 	"os"
 	"time"
+
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var db *gorm.DB
@@ -20,7 +21,7 @@ func main() {
 	var err error
 	file, err := os.OpenFile("./sql.txt", os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		log.Fatalf("open file error:", err)
+		log.Fatalf("open file error: %s", err)
 	}
 	defer file.Close()
 
@@ -41,10 +42,9 @@ func main() {
 	pageSize := 2000
 	page := 0
 	for {
-		results := []map[string]interface{}{}
+		results := []map[string]any{}
 		db.Model(&model2.LewaimaiOrderHistory{}).Offset(page * pageSize).Limit(pageSize).Find(&results)
 		fmt.Sprintf("results == %v \n", results)
-		break
 		if len(results) < pageSize {
 			break
 		}

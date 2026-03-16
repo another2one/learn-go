@@ -22,7 +22,6 @@ func main() {
 		"https://www.baidu.com/",
 	}
 	for _, urlStr := range urls {
-		urlStr := urlStr
 		g.Go(func() error {
 			c := &http.Client{
 				Timeout: time.Second * 3, // 超时

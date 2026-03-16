@@ -11,7 +11,7 @@ func main() {
 	var now = 0
 	var lock sync.RWMutex
 	sendCond := sync.NewCond(&lock)
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		go func(i int) {
 			lock.Lock()
 			for now != i {

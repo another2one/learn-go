@@ -1,0 +1,2 @@
+{"level":"ERROR","ts":"2025-12-10 14:34:45","caller":"http/main.go:209","msg":"query error: record not found"}
+{"level":"ERROR","ts":"2025-12-10 15:03:38","caller":"http/main.go:209","msg":"query error: record not found"}

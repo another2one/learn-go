@@ -51,7 +51,7 @@ func RandomStr(length int) string {
 	baseStr := "abcdefghijklmnopqrstuvwxyz123456789"
 	baseLen := len(baseStr)
 	randBytes := make([]byte, length)
-	for i := 0; i < length; i++ {
+	for i := range length {
 		key := rand.Intn(baseLen)
 		randBytes[i] = baseStr[key]
 	}
@@ -59,15 +59,15 @@ func RandomStr(length int) string {
 }
 
 func BuildQuery(a map[string]string, isEncode bool) string {
-	str := ""
+	var str strings.Builder
 	for k, v := range a {
 		if isEncode {
-			str += k + "=" + url.QueryEscape(v) + "&"
+			str.WriteString(k + "=" + url.QueryEscape(v) + "&")
 		} else {
-			str += k + "=" + v + "&"
+			str.WriteString(k + "=" + v + "&")
 		}
 	}
-	return strings.TrimRight(str, "&")
+	return strings.TrimRight(str.String(), "&")
 }
 
 func GetFormValue(a map[string]string) url.Values {

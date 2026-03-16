@@ -8,7 +8,7 @@ var (
 )
 
 type UserDate interface {
-	Find(name interface{}) bool
+	Find(name any) bool
 }
 
 const (
@@ -37,7 +37,7 @@ func NewNode(userData UserDate) *doubleNode {
 }
 
 // 查找节点
-func (link *Link) search(name interface{}) (int, *doubleNode, error) {
+func (link *Link) search(name any) (int, *doubleNode, error) {
 	temp := link.head.Next
 	len := 1
 	for {

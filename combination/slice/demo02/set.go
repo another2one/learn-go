@@ -1,5 +1,7 @@
 package demo02
 
+import "slices"
+
 import "sort"
 
 // 去重 利用map[string]struct{} 可实现set
@@ -43,13 +45,7 @@ func SliceToSet2(s1 []int) []int {
 	}
 	s2 := s1[:1]
 	for _, v := range s1[1:] {
-		tag := true
-		for _, item := range s2 {
-			if item == v {
-				tag = false
-				break
-			}
-		}
+		tag := !slices.Contains(s2, v)
 		if tag {
 			s2 = append(s2, v)
 		}
@@ -64,13 +60,7 @@ func StringSliceToSet(s1 []string) []string {
 	}
 	s2 := s1[:1]
 	for _, v := range s1[1:] {
-		tag := true
-		for _, item := range s2 {
-			if item == v {
-				tag = false
-				break
-			}
-		}
+		tag := !slices.Contains(s2, v)
 		if tag {
 			s2 = append(s2, v)
 		}

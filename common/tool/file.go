@@ -76,7 +76,7 @@ func WriteExcel[T any](data [][]T, file string) error {
 	return f.SaveAs(file)
 }
 
-func writeCell(f *excelize.File, rowIndex int, columnIndex int, value interface{}) {
+func writeCell(f *excelize.File, rowIndex int, columnIndex int, value any) {
 	cell := GetCell(columnIndex, rowIndex)
 	if err := f.SetCellValue("Sheet1", cell, value); err != nil {
 		log.Printf("write excel cell = [%s] valie = [%s] err: %s \n", cell, value, err)

@@ -27,6 +27,6 @@ func main() {
 	db.First(&user, 1)
 	fmt.Printf("user = %v \n", user)
 	db.Model(&user).Update("Age", 18)
-	db.Model(&user).Omit("Role").Updates(map[string]interface{}{"Name": "jinzhu", "Role": "admin"})
+	db.Model(&user).Omit("Role").Updates(map[string]any{"Name": "jinzhu", "Role": "admin"})
 	//db.Delete(&user)
 }

@@ -15,14 +15,14 @@ func main() {
 	}
 
 	done := make(chan bool)
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		go func(i int) {
 			once.Do(onceFunc) // 保证只运行一遍
 			done <- true
 		}(i)
 	}
 	once.Do(onceFunc)
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		<-done
 	}
 }

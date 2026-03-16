@@ -69,12 +69,11 @@ func main() {
 		if len(v1) > 0 {
 			id, ok := strings.CutPrefix(v1, "music/")
 			if !ok {
-				fmt.Errorf("url error %s \n", v1)
+				fmt.Printf("url error %s \n", v1)
 				continue
 			}
 			fmt.Printf("%v \n", id)
 			detailPage(host+v1, id)
-			break
 			// 休眠一会 防止被检测出来爬虫
 			time.Sleep(time.Millisecond * 1500)
 		}

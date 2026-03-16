@@ -13,7 +13,7 @@ var (
 )
 
 func TestAdd(t *testing.T) {
-	for i := 0; i < num; i++ {
+	for i := range num {
 		user := &User{
 			Id:     i,
 			Status: byte(i % 2),
@@ -32,7 +32,7 @@ func TestDelete(t *testing.T) {
 
 	rand.Seed(seedNumber - 1)
 	deleteId := 0
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		deleteId = rand.Intn(num)
 		t.Logf("delete %d \n", deleteId)
 		ht.Delete(deleteId)
@@ -60,7 +60,7 @@ func TestUpdate(t *testing.T) {
 	rand.Seed(seedNumber - 2)
 	updateId := 0
 	status := 0
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		status = rand.Intn(4) + 2
 		updateId = rand.Intn(num)
 		err := ht.Update(updateId, byte(status))
@@ -76,7 +76,7 @@ func TestSearch(t *testing.T) {
 
 	rand.Seed(seedNumber - 3)
 	searchId := 0
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		searchId = rand.Intn(num)
 		user, err := ht.Search(searchId)
 		if err != nil {

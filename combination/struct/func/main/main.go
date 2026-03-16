@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 type Student struct {
@@ -35,11 +36,11 @@ func (i Integer) String() string {
 
 // TODO: ...参数 切片会改变原来数据，多参数只是传值
 func joinString(v ...string) string {
-	str := ""
+	var str strings.Builder
 	for _, s := range v {
-		str += s
+		str.WriteString(s)
 	}
-	return str
+	return str.String()
 }
 
 func joinSliceString(v []string) {
@@ -62,14 +63,14 @@ func strAddNumber(v ...string) string {
 }
 
 type userInter interface {
-	Edit1(name interface{})
+	Edit1(name any)
 }
 
 type User struct {
 	Name string
 }
 
-func (user *User) Edit1(name interface{}) {
+func (user *User) Edit1(name any) {
 	switch name := name.(type) {
 	case string:
 		user.Name = name
@@ -79,7 +80,7 @@ func (user *User) Edit1(name interface{}) {
 // 不能用 *userInter  具体在
 type UserInterSlice []userInter
 
-func (userInterSlice UserInterSlice) Edit1(name interface{}) {
+func (userInterSlice UserInterSlice) Edit1(name any) {
 	for _, v := range userInterSlice {
 		v.Edit1(name)
 	}

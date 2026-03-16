@@ -10,7 +10,7 @@ func main() {
 	// 10个协程打印1-10，让其顺序显示
 	c := make(chan int, 1)
 	var wg sync.WaitGroup
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		wg.Add(1)
 		c <- i
 		go func() {
@@ -22,7 +22,7 @@ func main() {
 
 	// 不带缓冲通道必须同时写入和读取通道，不然会报错
 	c = make(chan int)
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		wg.Add(1)
 		go func(i int) {
 			c <- i

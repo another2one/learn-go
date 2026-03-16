@@ -65,10 +65,10 @@ func main() {
 	printOther(str2float)
 }
 
-func printStr(str interface{}) {
+func printStr(str any) {
 	fmt.Printf("str's type is %T, str = %q \n", str, str)
 }
 
-func printOther(other interface{}) {
+func printOther(other any) {
 	fmt.Printf("str's type is %T, str = %v \n", other, other)
 }

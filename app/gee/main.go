@@ -72,13 +72,11 @@ func main() {
 	})
 
 	r.GET("/panic", func(c *gee.Context) {
-		names := []string{"geektutu"}
-		c.String(http.StatusOK, names[100])
+		c.String(http.StatusOK, "geektutu")
 	})
 
 	r.Group("/v2").Use(gee.Recovery(), onlyForV2()).GET("/panic", func(c *gee.Context) {
-		names := []string{"geektutu"}
-		c.String(http.StatusOK, names[100])
+		c.String(http.StatusOK, "geektutu")
 	})
 
 	r.GET("/date", func(c *gee.Context) {

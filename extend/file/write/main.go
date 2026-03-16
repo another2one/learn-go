@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 var (
@@ -31,7 +32,7 @@ func main() {
 	defer file.Close()
 
 	writer := bufio.NewWriter(file)
-	for i := 0; i < 5; i++ {
+	for range 5 {
 		writer.WriteString("hello Garden\r\n")
 	}
 	writer.Flush()
@@ -41,9 +42,9 @@ func main() {
 	//}
 
 	// 第二种
-	str := ""
-	for i := 0; i < 5; i++ {
-		str += "hello Dog\r\n"
+	var str strings.Builder
+	for range 5 {
+		str.WriteString("hello Dog\r\n")
 	}
-	os.WriteFile(dir, []byte(str), 0666)
+	os.WriteFile(dir, []byte(str.String()), 0666)
 }

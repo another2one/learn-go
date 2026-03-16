@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/xuri/excelize/v2"
 	"learn-go/common/tool"
 	"log"
 	"os"
 	"strconv"
+
+	"github.com/xuri/excelize/v2"
 )
 
 var (
@@ -52,7 +53,7 @@ func main() {
 		}
 		cellStr := "E" + strconv.Itoa(row)
 		if err = f.SetCellValue(sheet, cellStr, count); err != nil {
-			log.Fatalf("set excel cell [%s] = %s err: %s", cellStr, count, err)
+			log.Fatalf("set excel cell [%s] = %d err: %s", cellStr, count, err)
 		}
 	}
 

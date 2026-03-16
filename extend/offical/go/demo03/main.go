@@ -18,10 +18,10 @@ type Memo struct {
 }
 
 // Func is the type of the function to memoize.
-type Func func(key string) (interface{}, error)
+type Func func(key string) (any, error)
 
 type result struct {
-	value interface{}
+	value any
 	err   error
 }
 
@@ -32,7 +32,7 @@ func New(f Func) *Memo {
 var mu sync.Mutex
 
 // NOTE: not concurrency-safe!
-func (memo *Memo) Get(key string) (interface{}, error) {
+func (memo *Memo) Get(key string) (any, error) {
 	mu.Lock()
 	res, ok := memo.cache[key]
 	if !ok {
@@ -43,7 +43,7 @@ func (memo *Memo) Get(key string) (interface{}, error) {
 	return res.value, res.err
 }
 
-func httpGetBody(url string) (interface{}, error) {
+func httpGetBody(url string) (any, error) {
 	fmt.Println("get url .......")
 	resp, err := http.Get(url)
 	if err != nil {
@@ -65,7 +65,7 @@ var wg sync.WaitGroup
 func main() {
 	m := New(httpGetBody)
 	totalStart := time.Now()
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		for _, url := range incomingURLs() {
 			wg.Add(1)
 			go func(url string) {
